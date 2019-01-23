@@ -1,6 +1,7 @@
 /* NAVBAR */
 #menu{
     text-transform: uppercase;
+
 }
 
 .color-menu{
@@ -13,9 +14,21 @@
   font-family: 'Rubik', 'sans-serif';
 }
 
+.title-menu:hover{
+  text-decoration: none;
+  list-style: none;
+  color: white;
+}
+
 .item{
   font-weight: bold;
   font-size: 16px;
+}
+
+.item:hover{
+  text-decoration: none;
+  list-style: none;
+  color: white;
 }
 
 .fa.fa-bars{
@@ -31,6 +44,8 @@ li:hover,a:hover{
 .nav-item{
   margin-right: 20px;
 }
+
+/* EXEMPLE ITEM*/
 .exemple{
   margin-top: 100px;
 }
@@ -42,6 +57,13 @@ li:hover,a:hover{
   font-weight: bold;
   text-transform: uppercase;
 }
+
+/* FORMULAIRE */
+.form-inscr{
+  padding-left: 35%;
+}
+
+/* BODY */
 
 body{
   background-color: #eee;

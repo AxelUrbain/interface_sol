@@ -1,0 +1,48 @@
+/* NAVBAR */
+#menu{
+    text-transform: uppercase;
+}
+
+.color-menu{
+  color: white;
+}
+
+.title-menu{
+  font-weight: bold;
+  font-size: 26px;
+  font-family: 'Rubik', 'sans-serif';
+}
+
+.item{
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.fa.fa-bars{
+  color: white;
+}
+
+li:hover,a:hover{
+  text-decoration: none;
+  list-style: none;
+  color: white;
+}
+
+.nav-item{
+  margin-right: 20px;
+}
+.exemple{
+  margin-top: 100px;
+}
+
+.title-index{
+  font-size: 28px;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+body{
+  background-color: #eee;
+}

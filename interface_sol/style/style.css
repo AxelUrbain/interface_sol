@@ -1,0 +1,12 @@
+
+.color-menu{
+  font-size: 42px !important;
+  color: white;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-family: 'Rubik', sans-serif;
+}
+
+html, body {
+  background-color: red;
+}

@@ -36,14 +36,11 @@
   color: white;
 }
 
-html, body {
-  background-color: red;
-}
-
 #img-connect{
   width: 100%;
   height: 450px;
-  background:rgba(197,208,209, 0.5);
+  /*background:rgba(197,208,209, 0.5);*/
+  background-image: url('../img/img.jpg');
   padding-top: 275px;
 }
 
@@ -65,4 +62,67 @@ html, body {
   background: #02b8dd;
   text-decoration: none;
   color: white;
+}
+
+.space{
+  height: 100%;
+  width: 100%;
+  margin-bottom:40px;
+}
+
+.title{
+  text-transform: uppercase;
+  font-size: 38px;
+  margin-top:25px;
+  margin-bottom: 25px;
+}
+
+#footer-color{
+  width: 100%;
+  height: 130px;
+  background-color: #1CA3B8;
+}
+
+.footer-text{
+  padding-top: 50px;
+  text-align: center;
+  font-weight: normal;
+  font-family: 'Rubik', sans-serif;
+  color: white;
+}
+
+.btnConnect{
+  width: 50%;
+  height: 50px;
+  border-radius: 20px;
+  background-color: #1CA3B8;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-bottom: 25px;
+  margin-left: 25%;
+}
+
+.btnConnect:hover{
+  background: #02b8dd;
+  color: white;
+}
+
+.form-title{
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 130px;
+  font-size: 42px;
+}
+
+.label-title{
+  text-transform: uppercase;
+  font-size: 22px;
+}
+
+.form-space{
+  margin-bottom: 275px;
+  width: 100%;
+  height: 100%;
 }

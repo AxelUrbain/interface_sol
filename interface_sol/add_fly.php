@@ -15,23 +15,23 @@
   <body>
     <div id="menu">
       <nav class="navbar navbar-expand-lg">
-        <a class="color-menu" href="#">Suivi de vol</a>
+        <a class="color-menu" href="index.php">Suivi de vol</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="fa fa-bars fa-2x"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="item-menu disabled" href="#" aria-disabled="true">Ajouter vol</a>
+              <a class="item-menu" href="add_fly.php">Ajouter vol</a>
             </li>
             <li class="nav-item">
-              <a class="item-menu disabled" href="#" aria-disabled="true">Historique</a>
+              <a class="item-menu" href="#">Historique</a>
             </li>
             <li class="nav-item">
-              <a class="item-menu disabled" href="#" aria-disabled="true">Statistiques</a>
+              <a class="item-menu" href="#">Statistiques</a>
             </li>
             <li class="nav-item">
-              <a class="item-menu" href="connect.php">Connexion</a>
+              <a class="item-menu" href="script_deco.php">Deconnexion</a>
             </li>
           </ul>
         </div>
@@ -39,10 +39,11 @@
 
     </div>
 
-    <div id="img-connect">
-        <a class="bouton-connect bouton-marg" href="connect.php">Connecte toi !</a>
+    <div class="title">
+      <center>
+        <h2>Ajouter un vol</h2>
+      </center>
     </div>
-
 
     <div class="row space">
       <div class="col-lg-4 col-md-4">
@@ -57,6 +58,10 @@
         <center><h3 class="title">Consultation</h3></center>
         <center><i class="fa fa-desktop fa-9x"></i></center>
       </div>
+    </div>
+
+    <div class="">
+
     </div>
 
     <footer id="footer-color">

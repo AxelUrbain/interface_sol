@@ -1,3 +1,7 @@
+<?php
+
+ ?>
+
 <!doctype html>
 <html lang="fr">
   <head>
@@ -15,7 +19,7 @@
   <body>
     <div id="menu">
       <nav class="navbar navbar-expand-lg">
-        <a class="color-menu" href="#">Suivi de vol</a>
+        <a class="color-menu" href="index.php">Suivi de vol</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="fa fa-bars fa-2x"></span>
         </button>
@@ -31,7 +35,7 @@
               <a class="item-menu disabled" href="#" aria-disabled="true">Statistiques</a>
             </li>
             <li class="nav-item">
-              <a class="item-menu" href="connect.php">Connexion</a>
+              <a class="item-menu" href="#">Connexion</a>
             </li>
           </ul>
         </div>
@@ -39,25 +43,27 @@
 
     </div>
 
-    <div id="img-connect">
-        <a class="bouton-connect bouton-marg" href="connect.php">Connecte toi !</a>
+    <div class="row form-space">
+      <div class="col-lg-4 col-md-4"></div>
+
+      <div class="formulaire col-lg-4 col-md-4">
+        <h2 class="form-title">Connexion</h2>
+        <form action="connect.php" method="post">
+          <div class="form-group">
+            <label for="user" class="label-title">Utilisateur</label>
+            <input class="form-control" type="text" name="user" placeholder="Prenom.Nom" required>
+          </div>
+          <div class="form-group">
+            <label for="password" class="label-title">Mot de Passe</label>
+            <input class="form-control" type="password" name="password" required>
+          </div>
+          <button type="button" class="btn btnConnect" name="button">Connecte-toi !</button>
+        </form>
+      </div>
+
+      <div class="col-lg-4 col-md-4"></div>
     </div>
 
-
-    <div class="row space">
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Vol</h3></center>
-        <center><i class="fa fa-plane fa-9x"></i></center>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Transfert</h3></center>
-        <center><i class="fa fa-download fa-9x"></i></center>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Consultation</h3></center>
-        <center><i class="fa fa-desktop fa-9x"></i></center>
-      </div>
-    </div>
 
     <footer id="footer-color">
       <div class="footer-text">

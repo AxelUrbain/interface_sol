@@ -1,43 +1,16 @@
+<?php
+session_start();
+if(!isset($_SESSION['login'])){
+  header('Location: index.php');
+  exit();
+}
+ ?>
 <!doctype html>
 <html lang="fr">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <title>Suivi de Vol</title>
-  </head>
+  <?php include('include/membre/header.php'); ?>
   <body>
-    <div id="menu">
-      <nav class="navbar navbar-expand-lg">
-        <a class="color-menu" href="index.php">Suivi de vol</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="fa fa-bars fa-2x"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="item-menu" href="add_fly.php">Ajouter vol</a>
-            </li>
-            <li class="nav-item">
-              <a class="item-menu" href="#">Historique</a>
-            </li>
-            <li class="nav-item">
-              <a class="item-menu" href="#">Statistiques</a>
-            </li>
-            <li class="nav-item">
-              <a class="item-menu" href="script_deco.php">Deconnexion</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
-    </div>
+    <?php include('include/membre/navbar.php'); ?>
 
     <div class="title">
       <center>
@@ -60,15 +33,7 @@
       </div>
     </div>
 
-    <div class="">
-
-    </div>
-
-    <footer id="footer-color">
-      <div class="footer-text">
-        <p>Tout droit réservé - FlarmCalculator @2019</p>
-      </div>
-    </footer>
+    <?php include('include/footer.php'); ?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

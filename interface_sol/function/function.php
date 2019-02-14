@@ -43,7 +43,7 @@ function Traitement_Connexion(){
       else{
         $login = htmlentities($_POST['login'], ENT_QUOTES, "ISO-8859-1");
         $password = htmlentities($_POST['password'], ENT_QUOTES, "ISO-8859-1");
-        $req = $bdd->prepare("SELECT id FROM membres WHERE pseudo = :login AND password = :password");
+        $req = $bdd->prepare("SELECT id FROM membre WHERE nom = :login AND password = :password");
         $req->execute(array(
           'login'=>$login,
           'password'=>$password));
@@ -77,12 +77,12 @@ function Traitement_Connexion(){
         } */
 
         //Redirection vers l'interface admin ou gestionnaire
-        $req = $bdd->prepare("SELECT id_roles FROM membres WHERE pseudo = :login AND password = :password");
+        $req = $bdd->prepare("SELECT id_role FROM membre WHERE nom = :login AND password = :password");
         $req->execute(array('login'=>$login,
                              'password'=>$password));
         $resultat = $req->fetch();
 
-        $groupe = $resultat['id_roles'];
+        $groupe = $resultat['id_role'];
 
         if(!$resultat){
           echo " Ou vous n'avez pas de groupe !";

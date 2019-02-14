@@ -5,25 +5,25 @@
 
     <?php include('include/navbar.php'); ?>
 
-    <div id="img-connect">
-        <a class="bouton-connect bouton-marg" href="connect.php">Connecte toi !</a>
-    </div>
+      <div id="img-connect">
+          <a class="bouton-connect bouton-marg" href="connect.php">Connecte toi !</a>
+      </div>
 
 
-    <div class="row space">
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Vol</h3></center>
-        <center><i class="fa fa-plane fa-9x"></i></center>
+      <div class="row space">
+        <div class="col-lg-4 col-md-4">
+          <center><h3 class="title">Vol</h3></center>
+          <center><i class="fa fa-plane fa-9x"></i></center>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <center><h3 class="title">Transfert</h3></center>
+          <center><i class="fa fa-download fa-9x"></i></center>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <center><h3 class="title">Consultation</h3></center>
+          <center><i class="fa fa-desktop fa-9x"></i></center>
+        </div>
       </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Transfert</h3></center>
-        <center><i class="fa fa-download fa-9x"></i></center>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Consultation</h3></center>
-        <center><i class="fa fa-desktop fa-9x"></i></center>
-      </div>
-    </div>
 
     <?php include('include/footer.php'); ?>
 

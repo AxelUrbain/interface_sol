@@ -20,7 +20,7 @@ Traitement_Connexion();
         <form action="connect.php" method="post">
           <div class="form-group">
             <label for="user" class="label-title">Utilisateur</label>
-            <input class="form-control" type="text" name="login" placeholder="Prenom.Nom" required>
+            <input class="form-control" type="text" name="login" placeholder="Nom" required>
           </div>
           <div class="form-group">
             <label for="password" class="label-title">Mot de Passe</label>

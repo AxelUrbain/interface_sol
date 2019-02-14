@@ -23,12 +23,8 @@ if(!isset($_SESSION['login'])){
 
          <div class="col-md-6 col-lg-6">
            <center>
-             <h3 class="title">Inscription</h3>
-             <a href="#"><i class="fa fa-address-card fa-10x"></i></a><br>
-             <!-- Button trigger modal -->
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-               Inscription
-             </button>
+             <h3 class="">Inscription</h3>
+             <a data-toggle="modal" data-target="#exampleModal"><i class="fa fa-address-card fa-10x"></i></a>
             </center>
              <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,31 +94,73 @@ if(!isset($_SESSION['login'])){
 
          <div class="col-md-6 col-lg-6">
            <center>
-             <h3 class="title">Matériels</h3>
-             <a href="#"><i class="fab fa-avianex fa-10x"></i></a> <br>
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-               Inscription
-             </button>
+             <h3 class="">Matériels</h3>
+             <a data-toggle="modal" data-target="#ModalMateriel"><i class="fab fa-avianex fa-10x"></i></a>
            </center>
+           <!-- Modal -->
+          <div class="modal fade" id="ModalMateriel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Ajout d'un matériel</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                <form>
+                <div class="form-group row">
+                  <label for="" class="col-sm-4 col-form-label">Type</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="" placeholder="" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-4 col-form-label">Marque</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="" placeholder="" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-4 col-form-label">Modèle</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="" placeholder="" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-4 col-form-label">Année</label>
+                  <div class="col-sm-8">
+                    <input type="number" min="1900" max="2099" step="1" value="2019" class="form-control" id="" placeholder="" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-4 col-form-label">Finesse Théorique</label>
+                  <div class="col-sm-8">
+                    <input type="number" min="0" max="1000" step="1" value="" class="form-control" id="" placeholder="" required>
+                  </div>
+                </div>
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                   <button type="button" class="btn btn-primary">Inscrire</button>
+                 </div>
+                 </form>
+               </div>
+             </div>
+            </div>
          </div>
        </div>
        <div class="row space">
          <div class="col-md-6 col-md-6">
            <center>
-             <h3 class="title">Membres</h3>
-             <a href="#"><i class="fa fa-users fa-10x"></i></a> <br>
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-               Inscription
-             </button>
+             <h3 class="">Membres</h3>
+             <a href="list_member.php"><i class="fa fa-users fa-10x"></i></a>
            </center>
          </div>
          <div class="col-md-6 col-lg-6">
            <center>
-             <h3 class="title">Historique</h3>
-             <a href="#"><i class="fa fa-plane fa-10x"></i></a> <br>
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-               du cul
-             </button>
+             <h3 class="">Historique</h3>
+             <a href="hist_adm.php"><i class="fa fa-plane fa-10x"></i></a>
            </center>
          </div>
        </div>

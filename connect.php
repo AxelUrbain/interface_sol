@@ -1,3 +1,10 @@
+<?php
+require('function/function.php');
+
+// Traitement_Connexion
+Traitement_Connexion();
+?>
+
 <!doctype html>
 <html lang="fr">
   <?php include('include/membre/header.php'); ?>
@@ -5,25 +12,26 @@
 
     <?php include('include/navbar.php'); ?>
 
-      <div id="img-connect">
-          <a class="bouton-connect bouton-marg" href="connect.php">Connecte toi !</a>
+    <div class="row form-space">
+      <div class="col-lg-4 col-md-4"></div>
+
+      <div class="formulaire col-lg-4 col-md-4">
+        <h2 class="form-title">Connexion</h2>
+        <form action="connect.php" method="post">
+          <div class="form-group">
+            <label for="user" class="label-title">Utilisateur</label>
+            <input class="form-control" type="text" name="login" placeholder="Nom" required>
+          </div>
+          <div class="form-group">
+            <label for="password" class="label-title">Mot de Passe</label>
+            <input class="form-control" type="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btnConnect" name="button">Connecte-toi !</button>
+        </form>
       </div>
 
-
-      <div class="row space">
-        <div class="col-lg-4 col-md-4">
-          <center><h3 class="title">Vol</h3></center>
-          <center><i class="fa fa-plane fa-9x"></i></center>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <center><h3 class="title">Transfert</h3></center>
-          <center><i class="fa fa-download fa-9x"></i></center>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <center><h3 class="title">Consultation</h3></center>
-          <center><i class="fa fa-desktop fa-9x"></i></center>
-        </div>
-      </div>
+      <div class="col-lg-4 col-md-4"></div>
+    </div>
 
     <?php include('include/footer.php'); ?>
 

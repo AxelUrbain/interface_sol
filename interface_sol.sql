@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 14 fév. 2019 à 11:39
+-- Généré le :  mer. 13 mars 2019 à 17:20
 -- Version du serveur :  10.1.33-MariaDB
 -- Version de PHP :  7.2.6
 
@@ -25,13 +25,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `historique_vol`
+-- Structure de la table `information_vol`
 --
 
-CREATE TABLE `historique_vol` (
-  `id_vol` int(11) NOT NULL,
-  `id_membre` int(11) NOT NULL,
-  `Date_Ajout_Vol` datetime NOT NULL
+CREATE TABLE `information_vol` (
+  `id` int(11) NOT NULL,
+  `timer` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `coordonnées` varchar(255) NOT NULL,
+  `altitudeQFE` float NOT NULL,
+  `altitudeQNH` float NOT NULL,
+  `derive` float NOT NULL,
+  `finessePratique` float NOT NULL,
+  `vitHorizontalSol` float NOT NULL,
+  `vitHorizontalAir` float NOT NULL,
+  `vitVertical` float NOT NULL,
+  `Pression` float NOT NULL,
+  `id_Vol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -48,6 +57,14 @@ CREATE TABLE `machine` (
   `Année` int(11) NOT NULL,
   `FinesseThéorique` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `machine`
+--
+
+INSERT INTO `machine` (`id`, `Type`, `Marque`, `Modèle`, `Année`, `FinesseThéorique`) VALUES
+(1, 'Planeur', 'Schleicher', 'ASK 13', 2002, 33),
+(2, 'Moto-Plabeur', 'Schleicher', 'ASK 25', 1997, 30);
 
 -- --------------------------------------------------------
 
@@ -69,7 +86,11 @@ CREATE TABLE `membre` (
 --
 
 INSERT INTO `membre` (`id`, `nom`, `prenom`, `password`, `Date_inscription`, `id_role`) VALUES
-(1, 'grivault', 'mevin', 'admin', '2019-02-14', 4);
+(2, 'toto', 'toto', 'toto', '2019-02-15', 2),
+(7, 'Urbain', 'Axel', '$2y$10$6CO/.pEtD2U5lu.CQ0HyQ.4wxvQYg.b3NrFhTBRN.2yx9rjnqMuVC', '2019-03-13', 4),
+(8, 'Auzereau', 'Théo', '$2y$10$Gdi5Pyi7HGjGnxnRkReiq./G7O8lXyFLsFk6EJiZ/a7TE4naSZmm.', '2019-03-13', 1),
+(9, 'Grivault', 'Mévin', '$2y$10$7eVCm21ZuL5xdEjNjRQiO.sCLE//hN11KXdgpdYCvMyrPk46.ez8m', '2019-03-13', 4),
+(10, 'Baron', 'Quentin', '$2y$10$hSWdmBYBNZexl8u5C1lq.u8HEWAJfEh8a2C4XJJzLYdp25oMULTL6', '2019-03-13', 3);
 
 -- --------------------------------------------------------
 
@@ -95,22 +116,15 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `vol`
+-- Structure de la table `vols`
 --
 
-CREATE TABLE `vol` (
+CREATE TABLE `vols` (
   `id` int(11) NOT NULL,
-  `timer` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `coordonnées` varchar(255) NOT NULL,
-  `altitudeQFE` float NOT NULL,
-  `altitudeQNH` float NOT NULL,
-  `derive` float NOT NULL,
-  `finessePratique` float NOT NULL,
-  `vitHorizontalSol` float NOT NULL,
-  `vitHorizontalAir` float NOT NULL,
-  `vitVertical` float NOT NULL,
-  `Pression` float NOT NULL,
-  `id_machine` int(11) NOT NULL
+  `id_membre` int(11) NOT NULL,
+  `id_machine` int(11) NOT NULL,
+  `Date` datetime NOT NULL,
+  `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -118,11 +132,11 @@ CREATE TABLE `vol` (
 --
 
 --
--- Index pour la table `historique_vol`
+-- Index pour la table `information_vol`
 --
-ALTER TABLE `historique_vol`
-  ADD KEY `vol` (`id_vol`),
-  ADD KEY `membre` (`id_membre`);
+ALTER TABLE `information_vol`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vol` (`id_Vol`) USING BTREE;
 
 --
 -- Index pour la table `machine`
@@ -144,27 +158,34 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `vol`
+-- Index pour la table `vols`
 --
-ALTER TABLE `vol`
+ALTER TABLE `vols`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `machine` (`id_machine`);
+  ADD KEY `id_membre` (`id_membre`),
+  ADD KEY `id_machine` (`id_machine`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
+-- AUTO_INCREMENT pour la table `information_vol`
+--
+ALTER TABLE `information_vol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `machine`
 --
 ALTER TABLE `machine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `membre`
 --
 ALTER TABLE `membre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `roles`
@@ -173,20 +194,14 @@ ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT pour la table `vols`
+--
+ALTER TABLE `vols`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `historique_vol`
---
-ALTER TABLE `historique_vol`
-  ADD CONSTRAINT `historique_vol_ibfk_1` FOREIGN KEY (`id_membre`) REFERENCES `membre` (`id`);
-
---
--- Contraintes pour la table `machine`
---
-ALTER TABLE `machine`
-  ADD CONSTRAINT `machine_ibfk_1` FOREIGN KEY (`id`) REFERENCES `vol` (`id_machine`);
 
 --
 -- Contraintes pour la table `membre`
@@ -195,10 +210,12 @@ ALTER TABLE `membre`
   ADD CONSTRAINT `membre_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`);
 
 --
--- Contraintes pour la table `vol`
+-- Contraintes pour la table `vols`
 --
-ALTER TABLE `vol`
-  ADD CONSTRAINT `vol_ibfk_1` FOREIGN KEY (`id`) REFERENCES `historique_vol` (`id_vol`);
+ALTER TABLE `vols`
+  ADD CONSTRAINT `vols_ibfk_1` FOREIGN KEY (`id_membre`) REFERENCES `membre` (`id`),
+  ADD CONSTRAINT `vols_ibfk_2` FOREIGN KEY (`id_machine`) REFERENCES `machine` (`id`),
+  ADD CONSTRAINT `vols_ibfk_3` FOREIGN KEY (`id`) REFERENCES `information_vol` (`id_Vol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

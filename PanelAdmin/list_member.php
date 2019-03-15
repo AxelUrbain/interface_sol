@@ -37,37 +37,40 @@ if($_SESSION['id_role'] != 4){
                     die('Erreur : '.$e->getMessage());
             }
 
-            $req = $bdd->query("SELECT * FROM membre");
+            $req = $bdd->query("SELECT id, nom, prenom, Date_inscription, id_role FROM membre");
             ?>
 
-            <h2>Liste des membres</h2> <br>
-      </div>
-        <table>
+            <h2>Liste des membres</h2>
+        <table class="table table-sm">
           <caption>Liste des membres</caption>
-          <tr>
-            <th scope="col"><p>id </p></th>
-            <th scope="col"><p> Nom </p></th>
-
-            <th scope="col"><p> Prénom </p></th>
-            <th scope="col"><p> Password </p></th>
-            <th scope="col"><p> Date Inscription </p></th>
-            <th scope="col"><p> Role</p></th>
+          <thead>
+          <tr class="bg-dark">
+            <th class="text-uppercase th-membre" scope="col"><p>id </p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Nom </p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Prénom </p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Date Inscription </p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Role</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Modifier</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p> Supprimer</p></th>
           </tr>
+          </thead>
+          <tbody>
           <tr>
-            <? while($row = $req->fetch()){ ?>
-              <td><? echo $row['id']; ?></td>
-              <td><? echo $row['nom']; ?></td>
-              <td><? echo $row['prenom']; ?></td>
-              <td><? echo $row['password']; ?></td>
-              <td><? echo $row['Date_inscription']; ?></td>
-              <td><? echo $row['id_role']; ?></td>
-              <? echo '<td>'.'<a id="link_update_member" href="member/edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
-              <? echo '<td>'.'<a id="link_delete" href="member/delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
+            <?php while($row = $req->fetch()){ ?>
+              <th scope="row" class="bg-warning"><?php echo $row['id']; ?></th>
+              <td class=""><?php echo $row['nom']; ?></td>
+              <td><?php echo $row['prenom']; ?></td>
+              <td><?php echo $row['Date_inscription']; ?></td>
+              <td><?php echo $row['id_role']; ?></td>
+              <?php echo '<td>'.'<a class="btn btn-primary"  href="member/edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
+              <?php echo '<td>'.'<a class="btn btn-danger"  href="delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
           </tr>
-        <? }
+        </tbody>
+        <?php }
         $req->closeCursor();
         ?>
         </table>
+        </div>
     </div>
 
     <?php include('../include/footer.php'); ?>

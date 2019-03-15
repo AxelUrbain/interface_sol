@@ -7,13 +7,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="item-menu" href="../add_fly.php">Ajouter vol</a>
+          <a class="item-menu" href="../PanelAdmin/panel.php">Panel</a>
         </li>
         <li class="nav-item">
-          <a class="item-menu" href="../historique.php">Historique</a>
+          <a class="item-menu" href="../PanelAdmin/hist_adm.php">Historique</a>
         </li>
         <li class="nav-item">
-          <a class="item-menu" href="#">Matériels</a>
+          <a class="item-menu" href="../PanelAdmin/list_member.php">Membre</a>
+        </li>
+        <li class="nav-item">
+          <a class="item-menu" href="../PanelAdmin/list_equipment.php">Matériels</a>
         </li>
         <li class="nav-item">
           <a class="item-menu" href="../function/script_disconnect.php">Deconnexion</a>

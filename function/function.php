@@ -212,3 +212,15 @@ function InscriptionMachine(){
      }
  }
 }
+
+// Fonction préparation de la requete pour la suppression d'un utilisateur
+function  deleteUserId()
+{
+  return "DELETE FROM membre WHERE id=:id";
+}
+
+// Fontion préparation de la requete pour la modification d'un membre
+function selectUserId()
+{
+  return "SELECT * FROM membre WHERE id=:id";
+}

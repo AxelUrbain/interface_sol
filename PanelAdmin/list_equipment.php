@@ -19,7 +19,7 @@ if($_SESSION['id_role'] != 4){
     <?php include('../include/admin/navbar.php'); ?>
     <div class="title">
       <center>
-        <h2 class="title">Panel-Historique</h2>
+        <h2 class="title">Panel- Gestion des matériels</h2>
       </center>
     </div>
 
@@ -37,20 +37,21 @@ if($_SESSION['id_role'] != 4){
                     die('Erreur : '.$e->getMessage());
             }
 
-            $req = $bdd->query("SELECT * FROM vols");
+            $req = $bdd->query("SELECT * FROM machine");
             ?>
 
-            <h2>Liste des membres</h2>
+            <h2>Liste des matériels</h2>
         <table class="table table-sm">
-          <caption>Liste des membres</caption>
+          <caption>Matériels</caption>
           <thead>
           <tr class="bg-dark">
             <th class="text-uppercase th-membre" scope="col"><p>id</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>membre</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>machine</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>Date</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>description</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>Statistiques</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Type</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Marque</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Modèle</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Année</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Finesse</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>Modifier</p></th>
             <th class="text-uppercase th-membre" scope="col"><p>Supprimer</p></th>
           </tr>
           </thead>
@@ -58,11 +59,12 @@ if($_SESSION['id_role'] != 4){
           <tr>
             <?php while($row = $req->fetch()){ ?>
               <th scope="row" class="bg-warning"><?php echo $row['id']; ?></th>
-              <td class=""><?php echo $row['id_membre']; ?></td>
-              <td><?php echo $row['id_machine']; ?></td>
-              <td><?php echo $row['Date']; ?></td>
-              <td><?php echo $row['Description']; ?></td>
-              <?php echo '<td>'.'<a class="btn btn-primary" id="link_update_member" href="member/edit.php?id='.$row['id'].'">'."Statistiques".'</a>'.'</th>'; ?>
+              <td class=""><?php echo $row['Type']; ?></td>
+              <td><?php echo $row['Marque']; ?></td>
+              <td><?php echo $row['Modèle']; ?></td>
+              <td><?php echo $row['Année']; ?></td>
+              <td><?php echo $row['FinesseThéorique']; ?></td>
+              <?php echo '<td>'.'<a class="btn btn-primary" id="link_update_member" href="member/edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
               <?php echo '<td>'.'<a class="btn btn-danger" id="link_delete" href="member/delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
           </tr>
         </tbody>

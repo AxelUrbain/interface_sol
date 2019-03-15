@@ -24,11 +24,50 @@ if($_SESSION['id_role'] != 4){
     </div>
 
     <div class="container">
-      <div class="row space">
-        <div class="col-md-12 col-lg-12">
+          <div class="table table-stock">
+            <?php
+            // Connexion à la base de données
+            try
+            {
+                $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
+            }
 
-        </div>
+            catch(Exception $e)
+            {
+                    die('Erreur : '.$e->getMessage());
+            }
+
+            $req = $bdd->query("SELECT * FROM membre");
+            ?>
+
+            <h2>Liste des membres</h2> <br>
       </div>
+        <table>
+          <caption>Liste des membres</caption>
+          <tr>
+            <th scope="col"><p>id </p></th>
+            <th scope="col"><p> Nom </p></th>
+
+            <th scope="col"><p> Prénom </p></th>
+            <th scope="col"><p> Password </p></th>
+            <th scope="col"><p> Date Inscription </p></th>
+            <th scope="col"><p> Role</p></th>
+          </tr>
+          <tr>
+            <? while($row = $req->fetch()){ ?>
+              <td><? echo $row['id']; ?></td>
+              <td><? echo $row['nom']; ?></td>
+              <td><? echo $row['prenom']; ?></td>
+              <td><? echo $row['password']; ?></td>
+              <td><? echo $row['Date_inscription']; ?></td>
+              <td><? echo $row['id_role']; ?></td>
+              <? echo '<td>'.'<a id="link_update_member" href="member/edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
+              <? echo '<td>'.'<a id="link_delete" href="member/delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
+          </tr>
+        <? }
+        $req->closeCursor();
+        ?>
+        </table>
     </div>
 
     <?php include('../include/footer.php'); ?>

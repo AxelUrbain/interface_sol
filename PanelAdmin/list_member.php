@@ -10,6 +10,7 @@ if($_SESSION['id_role'] != 4){
   header('Location: ../index.php');
   exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -19,11 +20,42 @@ if($_SESSION['id_role'] != 4){
     <?php include('../include/admin/navbar.php'); ?>
     <div class="title">
       <center>
-        <h2 class="title">Panel- Gestion des membres</h2>
+        <h4 class="">Gestion des membres</h4>
       </center>
     </div>
 
     <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <form class="form-group" action="list_member.php" method="post">
+                  <div class="row">
+                    <label class="col-lg-2 col-md-2" for="">Role</label>
+                    <select class="col-lg-6 col-md-6 form-control" name="select_role">
+                      <?php
+                      // Connexion à la base de données
+                      try
+                      {
+                          $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
+                      }
+
+                      catch(Exception $e)
+                      {
+                              die('Erreur : '.$e->getMessage());
+                      }
+
+                      $resultat = $bdd->query("SELECT * FROM roles");
+                      while ($donnes = $resultat->fetch())
+                      {
+                        echo "<option value=".$donnes['role'].">".$donnes['role']."</option>";
+                      }
+                      $resultat->closeCursor();
+                       ?>
+                    </select>
+                    <button class="col-lg-4 col-md-4 btn btn-success" type="submit" name="button_select_role">Trier</button>
+                  </div>
+                </form>
+            </div>
+          </div>
           <div class="table table-stock">
             <?php
             // Connexion à la base de données
@@ -37,15 +69,61 @@ if($_SESSION['id_role'] != 4){
                     die('Erreur : '.$e->getMessage());
             }
 
-            $req = $bdd->query("SELECT id, nom, prenom, Date_inscription, id_role FROM membre");
+            $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+            $limite = 10;
+            /* CALCUL LE NUMERO DU PREMIER ELEMENT A RECUPERER */
+            $debut = ($page-1) * $limite;
+
+            if (isset($_POST['button_select_role'])) {
+
+              $RecupRole = $_POST['select_role'];
+              if($RecupRole == "admin")
+              {
+                $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS membre.id, membre.nom, membre.prenom, membre.password, membre.Date_inscription, roles.role
+                FROM membre
+                INNER JOIN roles ON membre.id_role = roles.id
+                WHERE roles.role = 'admin' LIMIT :limite OFFSET :debut ");
+              }
+              if($RecupRole == "élève")
+              {
+                $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS membre.id, membre.nom, membre.prenom, membre.password, membre.Date_inscription, roles.role
+                FROM membre
+                INNER JOIN roles ON membre.id_role = roles.id
+                WHERE roles.role = 'élève' LIMIT :limite OFFSET :debut ");
+              }
+              if($RecupRole == "instructeur")
+              {
+                $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS membre.id, membre.nom, membre.prenom, membre.password, membre.Date_inscription, roles.role
+                FROM membre
+                INNER JOIN roles ON membre.id_role = roles.id
+                WHERE roles.role = 'instructeur' LIMIT :limite OFFSET :debut ");
+              }
+              if($RecupRole == "pilote")
+              {
+                $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS membre.id, membre.nom, membre.prenom, membre.password, membre.Date_inscription, roles.role
+                FROM membre
+                INNER JOIN roles ON membre.id_role = roles.id
+                WHERE roles.role = 'pilote' LIMIT :limite OFFSET :debut ");
+              }
+            }
+            else
+            {
+              $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS membre.id, membre.nom, membre.prenom, membre.password, membre.Date_inscription, roles.role
+              FROM membre
+              INNER JOIN roles ON membre.id_role = roles.id
+              LIMIT :limite OFFSET :debut");
+            }
+
+            $req->bindValue('limite', $limite, PDO::PARAM_INT);
+            $req->bindValue('debut', $debut, PDO::PARAM_INT);
+
+            $req->execute();
             ?>
 
-            <h2>Liste des membres</h2>
         <table class="table table-sm">
           <caption>Liste des membres</caption>
           <thead>
           <tr class="bg-dark">
-            <th class="text-uppercase th-membre" scope="col"><p>id </p></th>
             <th class="text-uppercase th-membre" scope="col"><p> Nom </p></th>
             <th class="text-uppercase th-membre" scope="col"><p> Prénom </p></th>
             <th class="text-uppercase th-membre" scope="col"><p> Date Inscription </p></th>
@@ -57,19 +135,46 @@ if($_SESSION['id_role'] != 4){
           <tbody>
           <tr>
             <?php while($row = $req->fetch()){ ?>
-              <th scope="row" class="bg-warning"><?php echo $row['id']; ?></th>
-              <td class=""><?php echo $row['nom']; ?></td>
-              <td><?php echo $row['prenom']; ?></td>
+              <th scope="row" class="bg-warning"><?php echo $row['nom']; ?></th>
+              <th scope="row" class="bg-warning"><?php echo $row['prenom']; ?></th>
               <td><?php echo $row['Date_inscription']; ?></td>
-              <td><?php echo $row['id_role']; ?></td>
-              <?php echo '<td>'.'<a class="btn btn-primary"  href="member/edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
+              <td><?php echo $row['role']; ?></td>
+              <?php echo '<td>'.'<a class="btn btn-primary"  href="edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
               <?php echo '<td>'.'<a class="btn btn-danger"  href="delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
           </tr>
         </tbody>
         <?php }
+
+        $resultFoundRows = $bdd->query("SELECT found_rows()");
+        $nombreElementsTotal = $resultFoundRows->fetchColumn();
+        $nombreDePages = ceil($nombreElementsTotal / $limite);
+
+
         $req->closeCursor();
         ?>
         </table>
+        <?php
+        /*Si on est sur la première page, on n'a pas besoin d'afficher de lien
+         vers la précédente. On va donc l'afficher que si on est sur une autre
+         page que la première */
+         if($page > 1)
+         {
+           ?><a href="?page=<?php echo $page-1; ?>">Page précedente</a> - <?php
+         }
+
+         /* On va effectuer une boucle autant de fois que l'on a de pages */
+         for($i = 1; $i <= $nombreDePages; $i++)
+         {
+           ?><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a> <?php
+         }
+
+         /* Avec le nombre total de pages, on peut aussi masquer le lien
+ * vers la page suivante quand on est sur la dernière */
+        if($page < $nombreDePages)
+        {
+          ?> - <a href="?page=<?php echo $page+1; ?>">Page suivante</a><?php
+        }
+        ?>
         </div>
     </div>
 

@@ -197,7 +197,7 @@ function InscriptionMachine(){
        $years = $_POST['years'];
        $finesse = $_POST['finesse'];
        //Préparation de la requete d'Inscription
-       $requete = $bdd->prepare("INSERT INTO machine(Type, Marque, Modèle, Année, FinesseThéorique)
+       $requete = $bdd->prepare("INSERT INTO machine(type, marque, modele, annee, finesse)
        VALUES(:type, :marque, :modele, :annee, :finesse)");
        //Exécution de la raquete
        $requete->execute(array(
@@ -218,17 +218,33 @@ function  deleteUserId()
 {
   return "DELETE FROM membre WHERE id=:id";
 }
-
+// Fonction préparation de la requete pour la suppression d'une machine
+function deleteMachineId()
+{
+  return "DELETE FROM machine WHERE id=:id";
+}
 // Fontion préparation de la requete pour la modification d'un membre
 function selectUserId()
 {
   return "SELECT * FROM membre WHERE id=:id";
 }
 
+// Fontion préparation de la requete pour la modification d'une machine
+function selectMachineId()
+{
+  return "SELECT * FROM machine WHERE id=:id";
+}
+
 // Fonction préparation de la requete de modification d'un membre
 function updateMemberID()
 {
   return 'UPDATE membre SET nom = :nom, prenom = :prenom, password = :password, id_role = :role WHERE id = :id';
+}
+
+// Fonction préparation de la requete de modification d'une machine
+function updateMachineID()
+{
+  return 'UPDATE machine SET type = :type, marque = :marque, modele = :modele, annee = :annee, finesse = :finesse WHERE id = :id';
 }
 
 function displayInfoMember(){
@@ -251,7 +267,7 @@ function displayInfoMember(){
   $data=$query->fetch();
   if($data)
   {
-    echo '<form class="form-group" action="update.php?id='.$data['id'].'" method="post">';
+    echo '<form class="form-group" action="update_equipment.php?id='.$data['id'].'" method="post">';
     echo '<label>Nom : </label>';
     echo '<input class="form-control" type="text" name="nom" value="'.$data['nom'].'" required/>'.'</br>'.'</br>';
     echo '<label>Prénom : </label>';
@@ -261,6 +277,48 @@ function displayInfoMember(){
     echo '<label>id Role : </label>';
     echo '<input class="form-control" type="number" min="1" max="4" name="role" value="'.$data['id_role'].'" required/>'.'</br>'.'</br>';
     echo '<input type="submit" name="form_update" value="Modifier" class="btn btn-success" />';
+    echo '</form>';
+  }
+  else
+  {
+    echo '<p>'."Aucun résultat n'a pas été trouvé...".'</p>';
+  }
+  $query->closeCursor();
+}
+
+function displayInfoMachine()
+{
+  //Connexion a la base de donnéees
+  try{
+    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
+  }
+
+//Gestion des Erreurs
+  catch(Exception $e){
+    die('Erreur :'.$e->getMessage());
+  }
+
+  $id = $_GET['id'];
+  $query = $bdd->prepare(selectMachineId());
+  $array  =array(
+    'id'=> $id
+  );
+  $query->execute($array);
+  $data=$query->fetch();
+  if($data)
+  {
+    echo '<form class="form-group" action="update_equipment.php?id='.$data['id'].'" method="post">';
+    echo '<label>Type : </label>';
+    echo '<input class="form-control" type="text" name="type" value="'.$data['type'].'" required/>'.'</br>'.'</br>';
+    echo '<label>Marque : </label>';
+    echo '<input class="form-control" type="text" name="marque" value="'.$data['marque'].'" required/>'.'</br>'.'</br>';
+    echo '<label>Modèle : </label>';
+    echo '<input class="form-control" type="text" name="modele" value="'.$data['modele'].'" required/>'.'</br>'.'</br>';
+    echo '<label>Année : </label>';
+    echo '<input class="form-control" type="number" min="1900" max="2050" name="annee" value="'.$data['annee'].'" required/>'.'</br>'.'</br>';
+    echo '<label>Finesse : </label>';
+    echo '<input class="form-control" type="text"  name="finesse" value="'.$data['finesse'].'" required/>'.'</br>'.'</br>';
+    echo '<input type="submit" name="form_update_equipment" value="Modifier" class="btn btn-success" />';
     echo '</form>';
   }
   else

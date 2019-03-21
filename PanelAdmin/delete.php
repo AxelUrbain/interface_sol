@@ -14,6 +14,4 @@
     header('Location: list_member.php');
  }
 
- deleteUser();
-
-?>
+    deleteUser();

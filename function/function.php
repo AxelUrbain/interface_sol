@@ -145,7 +145,7 @@ function InscriptionMembre(){
       //Préparation de la requete d'Inscription
       $requete = $bdd->prepare("INSERT INTO membre(nom, prenom, password, Date_inscription, id_role)
       VALUES(:nom, :prenom, :password, NOW(), :id_role)");
-      //Exécution de la raquete
+      //Exécution de la requete
       $requete->execute(array(
         'nom'=> $name,
         'prenom'=> $first_name,

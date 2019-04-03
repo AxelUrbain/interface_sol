@@ -36,21 +36,81 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
             //$repertoireDestination = '/fc';
             $nomDestination = "fichier_du_".date("YmdHis").".".$extensionFichier;
             if(move_uploaded_file($_FILES["FileImport"]["tmp_name"],$repertoireDestination.$nomDestination)){
-              echo "ca marche ! ";
+              $success = "ca marche ! ";
             }
             else{
               echo "Le fichier ne s'est pas téléchargé";
            }
       }
     }
+    //Connexion simple sans gestion des erreurs à la base de données
+    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
+    //Récupération des info de vol ,Requete insertion des informations table vols
+    $recupInfoMembre = $bdd->query('SELECT id, nom, prenom FROM membre WHERE nom = "'.$_SESSION['login'].'"');
+    $infoMembre = $recupInfoMembre->fetch();
+    //RECUPERATION DE LA MACHINE
+    $machineFaux = "Planeur";
+    $membre = $infoMembre['id'];
+    $description = $_POST['Description'];
+
+    $requeteVols = $bdd->prepare("INSERT INTO vols (id_membre, id_machine, Description)
+    VALUES(:id_membre, :id_machine, :Description)");
+
+    $requeteVols->execute(array(
+      'id_membre'=> $membre,
+      'id_machine'=> $machineFaux,
+      'Description'=> $description
+    ));
+
+    $requeteVols->closeCursor();
+    //Requete d'insertion des informations du fichier
+    $requeteImport = $bdd->prepare("INSERT INTO information_vol (UTC, Latitude, Longitude, DirLatitude, DirLongitude, Altitude, Cap, Vitesse, TypeAlarme, NiveauAlarme,
+    EtatFLARM, PositionAutre, LongitudeAutre, LatitudeAutre, CapAutre, DirLatAutre, DirLongAutre) VALUES(:UTC, :Latitude, :Longitude, :DirLatitude, :DirLongitude, :Altitude, :Cap, :Vitesse,
+    :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre)");
+
     // Ouvre le fichier en lecture
-    //$fp = fopen($filename,"r");
-
+    $fp = fopen($nomDestination,"r");
+    $nbrligne = count(file($nomDestination));
     //Parcourir le fichier
+    while((!feof($fp))){
+      $text = fgets($fp);
+      $tableauImport = explode('/', $text);
+      //print_r($tableauImport);
+    }
 
-    //Stocker les informations dans la base de données information_vol
+  while (count($tableauImport)!= 0) {
+          $requeteImport->execute(array(
+            'UTC'=> $tableauImport[0],
+            'Latitude'=> $tableauImport[1],
+            'Longitude'=> $tableauImport[2],
+            'DirLatitude'=> $tableauImport[3],
+            'DirLongitude'=> $tableauImport[4],
+            'Altitude'=> $tableauImport[5],
+            'Cap'=> $tableauImport[6],
+            'Vitesse'=> $tableauImport[7],
+            'TypeAlarme'=> $tableauImport[8],
+            'NiveauAlarme'=> $tableauImport[9],
+            'EtatFLARM'=> $tableauImport[10],
+            'PositionAutre'=> $tableauImport[11],
+            'LongitudeAutre'=> $tableauImport[12],
+            'LatitudeAutre'=> $tableauImport[13],
+            'CapAutre'=> $tableauImport[14],
+            'DirLatAutre'=> $tableauImport[15],
+            'DirLongAutre'=> $tableauImport[16]
+            //'id_Vol'=>
+          ));
+          //SUPPRIMER LES 16 ELEMENTS DU TABLEAU
+          for ($i=0; $i < 17 ; $i++) {
+            array_shift($tableauImport);
+          }
+          //print_r($tableauImport);
+      }
+
+    fclose($fp);
+    //Gérer le membre qui importe le fichier requete SQL
 
     //Supprimer le fichier
+    unlink($nomDestination);
 
 } else{
     echo "Error: " . $_FILES["FileImport"]["error"];
@@ -68,6 +128,8 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
         <h2 class="form-title">Ajouter un vol</h2>
         <form class="form-group" action="add_fly.php" method="post" enctype="multipart/form-data">
           <center>
+            <label>Description du vol</label>
+            <input type="textarea" name="Description" placeholder="Texte ..." required>
             <input type="hidden" name="MAX_FILE_SIZE" value="1048576">
             <input class="btn btn-danger" type="file" name="FileImport">
             <input class="btn btn-success" type="submit" name="submit" value="Upload File">

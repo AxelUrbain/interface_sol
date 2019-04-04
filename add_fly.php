@@ -7,6 +7,8 @@ if(!isset($_SESSION['login'])){
 
 if(isset($_POST['submit']))
 {
+  //Tableau erreur
+  $erreur = array();
   // Vérifie si le fichier a été uploadé sans erreur.
 if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     $nomOrigine = $_FILES["FileImport"]["name"];
@@ -16,16 +18,18 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     // Vérifie l'extension du fichier
     $elementChemin = pathinfo($nomOrigine);
     $extensionFichier = $elementChemin['extension'];
-    $extensionAutorise = array("fc", "txt", "png");
+    $extensionAutorise = array("fc","txt");
 
     if(!(in_array($extensionFichier, $extensionAutorise))) {
-      echo "Erreur : Veuillez sélectionner un format de fichier valide.";
+      $erreur = "Erreur : Veuillez sélectionner un format de fichier valide.";
+      return;
     }
     else{
       // Vérifie la taille du fichier - 5Mo maximum
       $maxsize = 5 * 1024 * 1024;
       if($filesize > $maxsize){
-        echo "Error: La taille du fichier est supérieure à la limite autorisée.";
+        $erreur = "Error: La taille du fichier est supérieure à la limite autorisée.";
+        return;
       }
       else{
             //Télécharger le fichier
@@ -39,7 +43,8 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
               $success = "ca marche ! ";
             }
             else{
-              echo "Le fichier ne s'est pas téléchargé";
+              $erreur = "Le fichier ne s'est pas téléchargé";
+              return;
            }
       }
     }
@@ -53,20 +58,25 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     $membre = $infoMembre['id'];
     $description = $_POST['Description'];
 
-    $requeteVols = $bdd->prepare("INSERT INTO vols (id_membre, id_machine, Description)
-    VALUES(:id_membre, :id_machine, :Description)");
+    $recupInfoMembre->closeCursor();
+
+    $requeteVols = $bdd->prepare("INSERT INTO vols (id_membre, id_machine, description)
+    VALUES(:id_membre, :id_machine, :description)");
 
     $requeteVols->execute(array(
       'id_membre'=> $membre,
       'id_machine'=> $machineFaux,
-      'Description'=> $description
+      'description'=> $description
     ));
-
     $requeteVols->closeCursor();
+    //Récupération de l'identifiant du vol
+    $requeteIdVol = $bdd->query('SELECT MAX(id) FROM vols');
+    $IdVol = $requeteIdVol->fetch();
+    $requeteIdVol->closeCursor();
     //Requete d'insertion des informations du fichier
     $requeteImport = $bdd->prepare("INSERT INTO information_vol (UTC, Latitude, Longitude, DirLatitude, DirLongitude, Altitude, Cap, Vitesse, TypeAlarme, NiveauAlarme,
-    EtatFLARM, PositionAutre, LongitudeAutre, LatitudeAutre, CapAutre, DirLatAutre, DirLongAutre) VALUES(:UTC, :Latitude, :Longitude, :DirLatitude, :DirLongitude, :Altitude, :Cap, :Vitesse,
-    :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre)");
+    EtatFLARM, PositionAutre, LongitudeAutre, LatitudeAutre, CapAutre, DirLatAutre, DirLongAutre, id_Vol) VALUES(:UTC, :Latitude, :Longitude, :DirLatitude, :DirLongitude, :Altitude, :Cap, :Vitesse,
+    :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre, :id_Vol)");
 
     // Ouvre le fichier en lecture
     $fp = fopen($nomDestination,"r");
@@ -96,7 +106,8 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
             'LatitudeAutre'=> $tableauImport[13],
             'CapAutre'=> $tableauImport[14],
             'DirLatAutre'=> $tableauImport[15],
-            'DirLongAutre'=> $tableauImport[16]
+            'DirLongAutre'=> $tableauImport[16],
+            'id_Vol'=> $IdVol[0]
             //'id_Vol'=>
           ));
           //SUPPRIMER LES 16 ELEMENTS DU TABLEAU
@@ -107,23 +118,23 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
       }
 
     fclose($fp);
-    //Gérer le membre qui importe le fichier requete SQL
-
     //Supprimer le fichier
     unlink($nomDestination);
+    $requeteImport->closeCursor();
+    //MESSAGE DE NOTIFICATION
+    $success = "Le vol est bien enregistré !";
 
 } else{
-    echo "Error: " . $_FILES["FileImport"]["error"];
+    $erreur = "Error: " . $_FILES["FileImport"]["error"];
+    return;
 }
-} ?>
-
+}
+?>
 <!doctype html>
 <html lang="fr">
-  <?php include('include/membre/header.php'); ?>
+<?php include('include/membre/header.php'); ?>
   <body>
-
-    <?php include('include/membre/navbar.php'); ?>
-
+    <?php include('include/membre/navbar.php');?>
     <div class="formulaire">
         <h2 class="form-title">Ajouter un vol</h2>
         <form class="form-group" action="add_fly.php" method="post" enctype="multipart/form-data">

@@ -1,6 +1,6 @@
 <?php
 require('../function/function.php');
-
+require_once '../function/db-config.php';
 session_start();
 if(!isset($_SESSION['login'])){
   header('Location: ../index.php');
@@ -24,37 +24,6 @@ if($_SESSION['id_role'] != 4){
     </div>
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-lg-6">
-            <form class="form-group" action="hist_adm.php" method="post">
-              <div class="row">
-                <label class="col-lg-2 col-md-2" for="">Membre</label>
-                <select class="col-lg-6 col-md-6 form-control" name="select_membre">
-                  <?php
-                  // Connexion à la base de données
-                  try
-                  {
-                      $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-                  }
-
-                  catch(Exception $e)
-                  {
-                          die('Erreur : '.$e->getMessage());
-                  }
-
-                  $resultat = $bdd->query("SELECT * FROM membre");
-                  while ($donnes = $resultat->fetch())
-                  {
-                    echo "<option value=".$donnes['nom'].">".$donnes['nom']."</option>";
-                  }
-                  $resultat->closeCursor();
-                   ?>
-                </select>
-                <button class="col-lg-4 col-md-4 btn btn-success" type="submit" name="button_select_membre">Trier</button>
-              </div>
-            </form>
-        </div>
-      </div>
           <div class="table table-stock">
             <?php
             // Connexion à la base de données
@@ -73,7 +42,7 @@ if($_SESSION['id_role'] != 4){
             /* CALCUL LE NUMERO DU PREMIER ELEMENT A RECUPERER */
             $debut = ($page-1) * $limite;
 
-            $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS vols.id, membre.nom, machine.immatriculation, vols.Date, vols.Description
+            $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS vols.id, membre.nom, machine.immatriculation, vols.date_vols, vols.description
               FROM vols
               INNER JOIN membre ON vols.id_membre = membre.id
               INNER JOIN machine ON vols.id_machine = machine.id
@@ -104,8 +73,8 @@ if($_SESSION['id_role'] != 4){
               <th scope="row" class="bg-warning"><?php echo $row['id']; ?></th>
               <td class=""><?php echo $row['nom']; ?></td>
               <td><?php echo $row['immatriculation']; ?></td>
-              <td><?php echo $row['Date']; ?></td>
-              <td><?php echo $row['Description']; ?></td>
+              <td><?php echo $row['date_vols']; ?></td>
+              <td><?php echo $row['description']; ?></td>
               <?php echo '<td>'.'<a class="btn btn-primary" name="stat_vol"  href="display_vol.php?id='.$row['id'].'">'."Statistiques".'</a>'.'</td>'; ?>
               <?php echo '<td>'.'<form action="../function/delete_vol.php?id='.$row['id'].'" method="post"> <button class="btn btn-danger" type="submit" name="delete_vol">'."Supprimer".'</button></form>'.'</td>'; ?>
           </tr>

@@ -1,6 +1,6 @@
 <?php
 require('function/function.php');
-
+require_once 'function/db-config.php';
 // Traitement_Connexion
 Traitement_Connexion();
 ?>

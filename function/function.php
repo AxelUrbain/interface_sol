@@ -1,15 +1,5 @@
 <?php
-function Connexion(){
-  //Connexion a la base de donnéees
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-  }
-
-//Gestion des Erreurs
-  catch(Exception $e){
-    die('Erreur :'.$e->getMessage());
-  }
-}
+require_once 'db-config.php';
 
 function Disconnect(){
   session_start();
@@ -20,16 +10,6 @@ function Disconnect(){
 }
 
 function Traitement_Connexion(){
-
-  //Connexion a la base de donnéees
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-  }
-//Gestion des Erreurs
-  catch(Exception $e){
-    die('Erreur :'.$e->getMessage());
-  }
-
   // Si je boutton est de connexion appuyé
   if(isset($_POST['button'])){
     //Vérification des champs
@@ -127,14 +107,6 @@ function InscriptionMembre(){
     }
     else
     {
-      //Connexion a la base de donnéees
-      try{
-        $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-      }
-     //Gestion des Erreurs
-      catch(Exception $e){
-        die('Erreur :'.$e->getMessage());
-      }
       //Récupération des informations du formulaire
       $password = $_POST['motdepasse'];
       $name = $_POST['nom'];
@@ -182,14 +154,6 @@ function InscriptionMachine(){
      }
      else
      {
-       //Connexion a la base de donnéees
-       try{
-         $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-       }
-      //Gestion des Erreurs
-       catch(Exception $e){
-         die('Erreur :'.$e->getMessage());
-       }
        //Récupération des informations du formulaire
        $type = $_POST['type'];
        $marque = $_POST['marque'];
@@ -248,16 +212,6 @@ function updateMachineID()
 }
 
 function displayInfoMember(){
-  //Connexion a la base de donnéees
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-  }
-
-//Gestion des Erreurs
-  catch(Exception $e){
-    die('Erreur :'.$e->getMessage());
-  }
-
   $id = $_GET['id'];
   $query = $bdd->prepare(selectUserId());
   $array  =array(
@@ -288,16 +242,6 @@ function displayInfoMember(){
 
 function displayInfoMachine()
 {
-  //Connexion a la base de donnéees
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
-  }
-
-//Gestion des Erreurs
-  catch(Exception $e){
-    die('Erreur :'.$e->getMessage());
-  }
-
   $id = $_GET['id'];
   $query = $bdd->prepare(selectMachineId());
   $array  =array(

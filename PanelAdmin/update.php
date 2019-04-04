@@ -1,6 +1,6 @@
 <?php
 require_once '../function/function.php';
-
+require_once '../function/db-config.php';
 function updateInfoMember()
 {
   $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');

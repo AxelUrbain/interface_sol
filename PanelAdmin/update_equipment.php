@@ -1,7 +1,7 @@
 <?php
 require_once '../function/function.php';
 require_once '../function/db-config.php';
-function updateInfoMachine()
+function updateInfoMachine($bdd)
 {
   $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
 
@@ -27,7 +27,7 @@ function updateInfoMachine()
 }
 if (isset($_POST['form_update_equipment']))
 {
-  updateInfoMachine();
+  updateInfoMachine($bdd);
   header('Location: list_equipment.php');
 }
 

@@ -26,17 +26,6 @@ if($_SESSION['id_role'] != 4){
     <div class="container">
           <div class="table table-stock">
             <?php
-            // Connexion à la base de données
-            try
-            {
-                $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-            }
-
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
-
             $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
             $limite = 10;
             /* CALCUL LE NUMERO DU PREMIER ELEMENT A RECUPERER */

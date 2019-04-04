@@ -12,8 +12,8 @@ if($_SESSION['id_role'] != 4){
 }
 else
 {
-  InscriptionMembre();
-  InscriptionMachine();
+  InscriptionMembre($bdd);
+  InscriptionMachine($bdd);
 }
 ?>
 

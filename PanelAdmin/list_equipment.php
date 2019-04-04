@@ -31,17 +31,6 @@ if($_SESSION['id_role'] != 4){
                 <label class="col-lg-2 col-md-2" for="">Type</label>
                 <select class="col-lg-6 col-md-6 form-control" name="select_type">
                   <?php
-                  // Connexion à la base de données
-                  try
-                  {
-                      $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-                  }
-
-                  catch(Exception $e)
-                  {
-                          die('Erreur : '.$e->getMessage());
-                  }
-
                   $resultat = $bdd->query("SELECT * FROM machine");
                   while ($donnes = $resultat->fetch())
                   {
@@ -57,17 +46,6 @@ if($_SESSION['id_role'] != 4){
       </div>
           <div class="table table-stock">
             <?php
-            // Connexion à la base de données
-            try
-            {
-                $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-            }
-
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
-
             $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
             $limite = 10;
             /* CALCUL LE NUMERO DU PREMIER ELEMENT A RECUPERER */
@@ -122,7 +100,8 @@ if($_SESSION['id_role'] != 4){
           </thead>
           <tbody>
           <tr>
-            <?php while($row = $req->fetch()){ ?>
+            <?php
+             while($row = $req->fetch()){ ?>
               <th scope="row" class="bg-warning"><?php echo $row['type']; ?></th>
               <td><?php echo $row['marque']; ?></td>
               <td><?php echo $row['modele']; ?></td>

@@ -9,7 +9,7 @@ function Disconnect(){
   header('Location : index.php');
 }
 
-function Traitement_Connexion(){
+function Traitement_Connexion($bdd){
   // Si je boutton est de connexion appuyé
   if(isset($_POST['button'])){
     //Vérification des champs
@@ -86,7 +86,7 @@ function Traitement_Connexion(){
   }
 }
 
-function InscriptionMembre(){
+function InscriptionMembre($bdd){
  //Déclaration du tableau qui stockera tout les messages d'erreurs
   $error = array();
 
@@ -130,7 +130,7 @@ function InscriptionMembre(){
 }
 }
 
-function InscriptionMachine(){
+function InscriptionMachine($bdd){
   //Déclaration du tableau qui stockera tout les messages d'erreurs
    $error = array();
 
@@ -211,7 +211,7 @@ function updateMachineID()
   return 'UPDATE machine SET type = :type, marque = :marque, modele = :modele, annee = :annee, finesse = :finesse WHERE id = :id';
 }
 
-function displayInfoMember(){
+function displayInfoMember($bdd){
   $id = $_GET['id'];
   $query = $bdd->prepare(selectUserId());
   $array  =array(
@@ -240,7 +240,7 @@ function displayInfoMember(){
   $query->closeCursor();
 }
 
-function displayInfoMachine()
+function displayInfoMachine($bdd)
 {
   $id = $_GET['id'];
   $query = $bdd->prepare(selectMachineId());

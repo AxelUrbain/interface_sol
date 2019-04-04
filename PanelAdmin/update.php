@@ -1,7 +1,7 @@
 <?php
 require_once '../function/function.php';
 require_once '../function/db-config.php';
-function updateInfoMember()
+function updateInfoMember($bdd)
 {
   $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
 
@@ -25,7 +25,7 @@ function updateInfoMember()
 }
 if (isset($_POST['form_update']))
 {
-  updateInfoMember();
+  updateInfoMember($bdd);
   header('Location: list_member.php');
 }
 

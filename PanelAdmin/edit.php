@@ -20,7 +20,7 @@ if($_SESSION['id_role'] != 4){
     <div class="container">
       <center>
         <h3>Modification</h3>
-        <?php displayInfoMember(); ?>
+        <?php displayInfoMember($bdd); ?>
       </center>
     </div>
     <?php include('../include/footer.php'); ?>

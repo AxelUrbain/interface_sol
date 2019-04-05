@@ -1,4 +1,5 @@
 <?php
+require_once 'function/db-config.php';
 session_start();
 if(!isset($_SESSION['login'])){
   header('Location: index.php');
@@ -48,24 +49,24 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
            }
       }
     }
-    //Connexion simple sans gestion des erreurs à la base de données
-    $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8','root','');
     //Récupération des info de vol ,Requete insertion des informations table vols
     $recupInfoMembre = $bdd->query('SELECT id, nom, prenom FROM membre WHERE nom = "'.$_SESSION['login'].'"');
     $infoMembre = $recupInfoMembre->fetch();
-    //RECUPERATION DE LA MACHINE
-    $machineFaux = "Planeur";
     $membre = $infoMembre['id'];
     $description = $_POST['Description'];
-
     $recupInfoMembre->closeCursor();
-
+    //RECUPERATION DE LA MACHINE
+    $recupInfoMachine = $bdd->query('SELECT * FROM machine WHERE immatriculation = "'.$_POST['immatriculation'].'"');
+    $infoMachine = $recupInfoMachine->fetch();
+    $machine = $infoMachine['id'];
+    $recupInfoMachine->closeCursor();
+    //INSERTION DES INFORMATIONS DU FORMULAIRE DANS LA TABLE VOL
     $requeteVols = $bdd->prepare("INSERT INTO vols (id_membre, id_machine, description)
     VALUES(:id_membre, :id_machine, :description)");
 
     $requeteVols->execute(array(
       'id_membre'=> $membre,
-      'id_machine'=> $machineFaux,
+      'id_machine'=> $machine,
       'description'=> $description
     ));
     $requeteVols->closeCursor();
@@ -135,17 +136,40 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
 <?php include('include/membre/header.php'); ?>
   <body>
     <?php include('include/membre/navbar.php');?>
-    <div class="formulaire">
-        <h2 class="form-title">Ajouter un vol</h2>
-        <form class="form-group" action="add_fly.php" method="post" enctype="multipart/form-data">
-          <center>
-            <label>Description du vol</label>
-            <input type="textarea" name="Description" placeholder="Texte ..." required>
-            <input type="hidden" name="MAX_FILE_SIZE" value="1048576">
-            <input class="btn btn-danger" type="file" name="FileImport">
-            <input class="btn btn-success" type="submit" name="submit" value="Upload File">
-          </center>
-        </form>
+    <div class="container">
+      <h2 class="form-title">Ajouter un vol</h2>
+      <div class="row">
+        <div class="col-lg-4 col-md-4"></div>
+        <div class="col-lg-4 col-md-4">
+          <form action="add_fly.php" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label>Sélectionner un matériel</label>
+                <select class="form-control" name="immatriculation">
+                  <?php
+                  $resultat = $bdd->query("SELECT * FROM machine");
+                  while ($donnes = $resultat->fetch())
+                  {
+                    echo "<option value=".$donnes['immatriculation'].">".$donnes['immatriculation']."</option>";
+                  }
+                  $resultat->closeCursor();
+                   ?>
+                </select>
+              </div>
+              <div class="form-group">
+                 <label>Description du vol</label>
+                 <input class="form-control" type="textarea" name="Description" placeholder="Texte ..." required>
+              </div>
+              <div class="form-group">
+                  <input type="hidden" name="MAX_FILE_SIZE" value="1048576">
+                  <input class="btn btn-danger btn-lg btn-block" type="file" name="FileImport">
+              </div>
+              <div class="form-group">
+                <input class="btn btn-success btn-lg btn-block" type="submit" name="submit" value="Envoyer le vol">
+              </div>
+          </form>
+        </div>
+        <div class="col-lg-4 col-md-4"></div>
+      </div>
     </div>
 
     <div class="row space">

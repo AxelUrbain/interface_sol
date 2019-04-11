@@ -80,50 +80,38 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre, :id_Vol)");
 
     // Ouvre le fichier en lecture
-    $fp = fopen($nomDestination,"r");
-    $nbrligne = count(file($nomDestination));
-    //Parcourir le fichier
-    while((!feof($fp))){
-      $text = fgets($fp);
-      $tableauImport = explode('/', $text);
-      //print_r($tableauImport);
-    }
 
-  while (count($tableauImport)!= 0) {
-          $requeteImport->execute(array(
-            'UTC'=> $tableauImport[0],
-            'Latitude'=> $tableauImport[1],
-            'Longitude'=> $tableauImport[2],
-            'DirLatitude'=> $tableauImport[3],
-            'DirLongitude'=> $tableauImport[4],
-            'Altitude'=> $tableauImport[5],
-            'Cap'=> $tableauImport[6],
-            'Vitesse'=> $tableauImport[7],
-            'TypeAlarme'=> $tableauImport[8],
-            'NiveauAlarme'=> $tableauImport[9],
-            'EtatFLARM'=> $tableauImport[10],
-            'PositionAutre'=> $tableauImport[11],
-            'LongitudeAutre'=> $tableauImport[12],
-            'LatitudeAutre'=> $tableauImport[13],
-            'CapAutre'=> $tableauImport[14],
-            'DirLatAutre'=> $tableauImport[15],
-            'DirLongAutre'=> $tableauImport[16],
-            'id_Vol'=> $IdVol[0]
-            //'id_Vol'=>
-          ));
-          //SUPPRIMER LES 16 ELEMENTS DU TABLEAU
-          for ($i=0; $i < 17 ; $i++) {
-            array_shift($tableauImport);
-          }
-          //print_r($tableauImport);
+    $row = 1;
+    if(($fp = fopen($nomDestination,"r")) !== FALSE){
+      while(($data = fgetcsv($fp, 1000, "/")) !== FALSE){
+        $requeteImport->execute(array(
+          'UTC'=> $data[1],
+          'Latitude'=> $data[2],
+          'Longitude'=> $data[3],
+          'DirLatitude'=> $data[4],
+          'DirLongitude'=> $data[5],
+          'Altitude'=> $data[6],
+          'Cap'=> $data[7],
+          'Vitesse'=> $data[8],
+          'TypeAlarme'=> $data[9],
+          'NiveauAlarme'=> $data[10],
+          'EtatFLARM'=> $data[11],
+          'PositionAutre'=> $data[12],
+          'LongitudeAutre'=> $data[13],
+          'LatitudeAutre'=> $data[14],
+          'CapAutre'=> $data[15],
+          'DirLatAutre'=> $data[16],
+          'DirLongAutre'=> $data[17],
+          'id_Vol'=> $IdVol[0]
+        ));
       }
-
-    fclose($fp);
-    //Supprimer le fichier
-    unlink($nomDestination);
-    $requeteImport->closeCursor();
-    //MESSAGE DE NOTIFICATION
-    $success = "Le vol est bien enregistré !";
+      fclose($fp);
+      //Supprimer le fichier
+      unlink($nomDestination);
+      $requeteImport->closeCursor();
+      //MESSAGE DE NOTIFICATION
+      $success = "Le vol est bien enregistré !";
+    }
 
 } else{
     $erreur = "Error: " . $_FILES["FileImport"]["error"];

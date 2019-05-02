@@ -1,7 +1,5 @@
 <?php
 //Connexion a la base de donnéees
-$host = 'localhost';
-$dbname = 'interface_sol';
 $user = 'root';
 $password = '';
 

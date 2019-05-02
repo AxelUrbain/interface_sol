@@ -31,13 +31,13 @@ else
 
      <div class="container">
        <div class="row space">
-
          <div class="col-md-6 col-lg-6">
            <center>
-             <h3 class="">Inscription</h3>
-             <a data-toggle="modal" data-target="#Inscription"><i class="fa fa-address-card fa-10x"></i></a>
+            <!-- VISUEL - Inscription -->
+            <h3 class="">Inscription</h3>
+            <a data-toggle="modal" data-target="#Inscription"><i class="fa fa-address-card fa-10x"></i></a>
             </center>
-             <!-- Modal -->
+            <!-- Modal -->
             <div class="modal fade" id="Inscription" tabindex="-1" role="dialog" aria-labelledby="Inscription" aria-hidden="true">
              <div class="modal-dialog" role="document">
                <div class="modal-content">
@@ -47,24 +47,32 @@ else
                      <span aria-hidden="true">&times;</span>
                    </button>
                  </div>
+
+
+
+                 <!-- CORPS DU MODAL - FORMULAIRE INSCRIPTION -->
                  <div class="modal-body">
+                   <!-- FORMULAIRE - Redirection pour le traitement php -->
                   <form method="post" action="panel.php">
+                  <!-- DIV - NOM - Titre, taille class css etc ... -->
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nom</label>
+                    <label class="col-sm-4 col-form-label">Nom</label>
                     <div class="col-sm-8">
-                      <input name="nom" type="text" class="form-control" placeholder="Nom" required>
+                      <input name="nom" type="text" class="form-control" placeholder="Nom">
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label">Prénom</label>
                     <div class="col-sm-8">
-                      <input name="prenom" type="text" class="form-control" placeholder="Prénom" required>
+                      <input name="prenom" type="text" class="form-control" placeholder="Prénom">
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-4 col-form-label">Mot de Passe</label>
                     <div class="col-sm-8">
-                      <input name="motdepasse" type="password" class="form-control" placeholder="Mot de Passe" required>
+                      <input name="motdepasse" type="password" class="form-control" placeholder="Mot de Passe">
                     </div>
                   </div>
 

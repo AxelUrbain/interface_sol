@@ -1,14 +1,6 @@
 <?php
 require('function/function.php');
 require_once ('function/db-config.php');
-// Traitement_Connexion
-print_r($host);
-print_r($dbname);
-print_r($user);
-print_r($password);
-
-echo " ";
-print_r($bdd);
 
 Traitement_Connexion($bdd);
 ?>

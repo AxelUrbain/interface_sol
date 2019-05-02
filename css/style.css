@@ -181,6 +181,12 @@ table{
   color: #FFFFFF;
 }
 
+/*MAP LEAFLET*/
+#mapid {
+  height: 700px;
+  width: 100%;
+}
+
 /* Chnagement du format de l'écran */
 @media screen and (max-width: 990px) {
     #footer-color {

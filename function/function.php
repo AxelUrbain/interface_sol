@@ -10,17 +10,21 @@ function Disconnect(){
 }
 
 function Traitement_Connexion($bdd){
+  $error = array();
+  $success = array();
   // Si je boutton est de connexion appuyé
   if(isset($_POST['button'])){
     //Vérification des champs
-    if(empty($_POST['login'])){
-      echo "Le champ pseudo est vide.";
+    if((empty($_POST['login'])) OR (empty($_POST['password']))){
+      if(empty($_POST['login'])){
+        $error = "Le champ pseudo est vide.";
+      }
+      if(empty($_POST['password'])){
+          $error = "Le champ mot de passe est vide.";
+      }
+      return $error;
     }
     else{
-      if(empty($_POST['password'])){
-        echo "Le champ mot de passe est vide.";
-      }
-      else{
         $login = htmlentities($_POST['login'], ENT_QUOTES, "ISO-8859-1");
         $password = htmlentities($_POST['password'], ENT_QUOTES, "ISO-8859-1");
         //hashage du mot de passe avec Bcrypt
@@ -31,79 +35,80 @@ function Traitement_Connexion($bdd){
         $resultat = $req->fetch();
         if(!$resultat)
         {
-          echo"Mauvais pseudo ou mot de passe.";
+          $error = "Mauvais pseudo ou mot de passe.";
+          return $error;
         }
         else{
           $password_hashed = $resultat['password'];
           if(password_verify($password, $password_hashed)){
-            echo "Mot de passe correct !";
-          } else{
-            echo "Mauvais pseudo ou mot de passe";
-          }
-        }
+            $success = "Mot de passe correct !";
+            //Redirection vers l'interface admin ou gestionnaire
+            $groupe = $resultat['id_role'];
+            if(!$resultat){
+              $error = " Ou vous n'avez pas de groupe !";
+              return $error;
+            }
+            else{
+              if($groupe == 4){
+                session_start();
+                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['id_role'] = $groupe;
+                header('Location: PanelAdmin/panel.php');
+                exit();
+              }
 
-        //Redirection vers l'interface admin ou gestionnaire
-        $groupe = $resultat['id_role'];
+              if($groupe == 3){
+                session_start();
+                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['id_role'] = $groupe;
+                header('Location: add_fly.php');
+                exit();
+              }
 
-        if(!$resultat){
-          echo " Ou vous n'avez pas de groupe !";
-        }
-        else{
-          if($groupe == 4){
-            session_start();
-            $_SESSION['login'] = $_POST['login'];
-            $_SESSION['id_role'] = $groupe;
-            header('Location: PanelAdmin/panel.php');
-            exit();
-          }
+              if($groupe == 2){
+                session_start();
+                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['id_role'] = $groupe;
+                header('Location: add_fly.php');
+                exit();
+              }
 
-          if($groupe == 3){
-            session_start();
-            $_SESSION['login'] = $_POST['login'];
-            $_SESSION['id_role'] = $groupe;
-            header('Location: add_fly.php');
-            exit();
+              if($groupe == 1){
+                session_start();
+                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['id_role'] = $groupe;
+                header('Location: add_fly.php');
+                exit();
+              }
           }
-
-          if($groupe == 2){
-            session_start();
-            $_SESSION['login'] = $_POST['login'];
-            $_SESSION['id_role'] = $groupe;
-            header('Location: add_fly.php');
-            exit();
-          }
-
-          if($groupe == 1){
-            session_start();
-            $_SESSION['login'] = $_POST['login'];
-            $_SESSION['id_role'] = $groupe;
-            header('Location: add_fly.php');
-            exit();
-          }
+         }
         }
       }
-    }
   }
 }
 
 function InscriptionMembre($bdd){
  //Déclaration du tableau qui stockera tout les messages d'erreurs
   $error = array();
-
-  //Vérification des champs
+  //Vérification SI LE BOUTON NE RETOURNE PAS UN NULL
   if(isset($_POST['Btn_Inscription'])){
-    //Vérification des champs
-    if(empty($_POST['nom'])){
-      $error[] = "Le nom n'est pas référencé !";
-    }
-    if(empty($_POST['prenom'])){
-      $error[] = "Le prénom n'est pas référencé !";
-    }
-    if(empty($_POST['motdepasse'])){
-      $error[] = "Le mot de passe n'est pas référencé ou valide !";
-    }
-    if(empty($_POST['role'])){
-      $error[] = "Le role n'est pas référencé !";
+    //Vérification SI AU MOINS UN CHAMP EST VIDE
+    if((empty($_POST['nom'])) OR (empty($_POST['prenom'])) OR (empty($_POST['motdepasse'])) OR (empty($_POST['role'])) ){
+      //Si au moins un champ est vide déterminer qu'elles sont les champs vide
+      if(empty($_POST['nom'])){
+        $error = "Le nom n'est pas référencé !";
+      }
+      if(empty($_POST['prenom'])){
+        $error = "Le prénom n'est pas référencé !";
+      }
+      if(empty($_POST['motdepasse'])){
+        $error = "Le mot de passe n'est pas référencé ou valide !";
+      }
+      if(empty($_POST['role'])){
+        $error = "Le role n'est pas référencé !";
+      }
+      //Retouner tout les messages d'erreurs du tableau error
+      return $error;
     }
     else
     {
@@ -126,6 +131,7 @@ function InscriptionMembre($bdd){
       ));
       //Message qui valide l'inscription
       $success = "Vous avez inscits un membre !";
+      echo $success;
     }
 }
 }

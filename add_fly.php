@@ -122,6 +122,8 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
 <!doctype html>
 <html lang="fr">
 <?php include('include/membre/header.php'); ?>
+<script src="Script/bootstrap-progressbar.min.js" type="text/javascript"></script>
+<script src="progress-bar.js" type="text/javascript"></script>
   <body>
     <?php include('include/membre/navbar.php');?>
     <div class="container">
@@ -129,7 +131,7 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
       <div class="row">
         <div class="col-lg-4 col-md-4"></div>
         <div class="col-lg-4 col-md-4">
-          <form action="add_fly.php" method="post" enctype="multipart/form-data">
+          <form action="add_fly.php" method="post" enctype="multipart/form-data" id="upload_form">
               <div class="form-group">
                 <label>Sélectionner un matériel</label>
                 <select class="form-control" name="immatriculation">
@@ -155,23 +157,11 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
                 <input class="btn btn-success btn-lg btn-block" type="submit" name="submit" value="Envoyer le vol">
               </div>
           </form>
+          <div id="progress-wrp" class="progress" style="height:20px;">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
         <div class="col-lg-4 col-md-4"></div>
-      </div>
-    </div>
-
-    <div class="row space">
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Vol</h3></center>
-        <center><i class="fa fa-fighter-jet fa-10x"></i></center>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Transfert</h3></center>
-        <center><i class="fa fa-download fa-10x"></i></center>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <center><h3 class="title">Consultation</h3></center>
-        <center><i class="fa fa-desktop fa-10x"></i></center>
       </div>
     </div>
 

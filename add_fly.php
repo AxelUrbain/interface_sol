@@ -80,7 +80,6 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre, :id_Vol)");
 
     // Ouvre le fichier en lecture
-
     $row = 1;
     if(($fp = fopen($nomDestination,"r")) !== FALSE){
       while(($data = fgetcsv($fp, 1000, "/")) !== FALSE){

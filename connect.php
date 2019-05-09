@@ -20,13 +20,13 @@ Traitement_Connexion($bdd);
         <form action="connect.php" method="post">
           <div class="form-group">
             <label for="user" class="label-title">Utilisateur</label>
-            <input class="form-control" type="text" name="login" placeholder="Nom" required>
+            <input class="form-control" type="text" name="login" placeholder="Nom.Prénom" required>
           </div>
           <div class="form-group">
             <label for="password" class="label-title">Mot de Passe</label>
             <input class="form-control" type="password" name="password" required>
           </div>
-          <button type="submit" class="btn btnConnect" name="button">Connecte-toi !</button>
+          <button type="submit" class="btn btnConnect" name="button">CONNEXION</button>
         </form>
       </div>
 

@@ -1,24 +1,25 @@
 <?php
-header('Content-Type: application/json');
+require_once 'function/db-config.php';
+require_once 'function/function.php';
+//Récupération de la Latitude et de la Longitude
+$dataLongLat = array();
+$reqLatLon = $bdd->query("SELECT id,Longitude,Latitude,DirLongitude,DirLatitude FROM information_vol");
 
-define('DB_HOST','127.0.0.1');
-define('DB_USERNAME','root');
-define('DB_PASSWORD','');
-define('DB_NAME','interface_sol');
-
-$bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', DB_USERNAME, DB_PASSWORD);
-
-
-$req = $bdd->query("SELECT id, Altitude FROM information_vol ORDER BY id");
-
-$data = array();
-
-foreach($req->fetchAll(PDO::FETCH_ASSOC) as $row){
-  $data[] = $row;
+//Récupérer toutes les longitudes faire un tableau puis les convertirs
+//Récupérer toutes les latitudes faire un tableau puis les convertirs
+while ($row = $reqLatLon->fetch()) {
+  //Conversion Longitude
+  $Longitude = $row['Longitude'];
+  $DirLong = $row['DirLongitude'];
+  $LongitudeDD = DMtoDD(substr($Longitude,0,3),substr($Longitude,3,10),$DirLong);
+  //Conversion Latitude
+  $Latitude = $row['Latitude'];
+  $DirLat = $row['DirLatitude'];
+  $LatitudeDD = DMtoDD(substr($Latitude,0,2),substr($Latitude,2,9),$DirLat);
+  $dataLongLat[] = $LongitudeDD.','.$LatitudeDD;
 }
 
+$reqLatLon->closeCursor();
 
-$req->closeCursor();
-
-print json_encode($data);
+print json_encode($dataLongLat);
 ?>

@@ -1,0 +1,40 @@
+
+
+
+
+/// URGENT AVANT LA FIN DU PROJET ///
+
+3- Cr�er les historiques personnelles
+    Faire ça en acf
+
+4- Statistiques par vols et appartenant � un membre
+  Faire ça en acf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5- Suivi des �l�ves par un prof
+
+6- S�curisation
+
+7- Optimisation du code
+
+8- Commentaires / Rapport de projet

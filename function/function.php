@@ -27,10 +27,15 @@ function Traitement_Connexion($bdd){
     else{
         $login = htmlentities($_POST['login'], ENT_QUOTES, "ISO-8859-1");
         $password = htmlentities($_POST['password'], ENT_QUOTES, "ISO-8859-1");
+        //Récupérer le nom et prénom
+        $user = explode(".",$login);
+        $nom = $user[0];
+        $prenom = $user[1];
         //hashage du mot de passe avec Bcrypt
-        $req = $bdd->prepare("SELECT id, password, id_role FROM membre WHERE nom = :login");
+        $req = $bdd->prepare("SELECT id, password, id_role FROM membre WHERE nom = :nom AND prenom = :prenom");
         $req->execute(array(
-          'login'=>$login));
+          'nom'=>$nom,
+          'prenom'=>$prenom));
 
         $resultat = $req->fetch();
         if(!$resultat)
@@ -51,7 +56,7 @@ function Traitement_Connexion($bdd){
             else{
               if($groupe == 4){
                 session_start();
-                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['login'] = $nom;
                 $_SESSION['id_role'] = $groupe;
                 header('Location: PanelAdmin/panel.php');
                 exit();
@@ -59,7 +64,7 @@ function Traitement_Connexion($bdd){
 
               if($groupe == 3){
                 session_start();
-                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['login'] = $nom;
                 $_SESSION['id_role'] = $groupe;
                 header('Location: add_fly.php');
                 exit();
@@ -67,7 +72,7 @@ function Traitement_Connexion($bdd){
 
               if($groupe == 2){
                 session_start();
-                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['login'] = $nom;
                 $_SESSION['id_role'] = $groupe;
                 header('Location: add_fly.php');
                 exit();
@@ -75,7 +80,7 @@ function Traitement_Connexion($bdd){
 
               if($groupe == 1){
                 session_start();
-                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['login'] = $nom;
                 $_SESSION['id_role'] = $groupe;
                 header('Location: add_fly.php');
                 exit();
@@ -276,4 +281,31 @@ function displayInfoMachine($bdd)
     echo '<p>'."Aucun résultat n'a pas été trouvé...".'</p>';
   }
   $query->closeCursor();
+}
+
+function DMtoDD($deg,$min,$direction){
+  //récupérer les infos
+  $d = strtolower($direction);
+  $ok = array('n','s','e','w');
+  //degrees must be integer between 0 and 180
+  if(!is_numeric($deg) || $deg < 0 || $deg > 180) {
+     $decimal = false;
+  }
+  //minutes must be integer or float between 0 and 59
+  elseif(!is_numeric($min) || $min < 0 || $min > 59) {
+     $decimal = false;
+  }
+  //seconds must be integer or float between 0 and 59
+  elseif(!in_array($d, $ok)) {
+     $decimal = false;
+  }
+  else {
+     //inputs clean, calculate
+     $decimal = $deg + ($min / 60);
+     //reverse for south or west coordinates; north is assumed
+     if($d == 's' || $d == 'w') {
+        $decimal *= -1;
+     }
+  }
+  return $decimal;
 }

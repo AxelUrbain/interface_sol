@@ -6,34 +6,47 @@ if(!isset($_SESSION['login'])){
 }
 
 require_once 'function/db-config.php';
+require_once 'function/function.php';
 
-$Altitude = '';
-$Vitesse = '';
-$UnitSec = '';
+if(isset($_POST['statistique']))
+{
+  $Altitude = '';
+  $Vitesse = '';
+  $UnitSec = '';
 
-//query to get data from the table
-$reqAltitude = $bdd->query("SELECT id,Altitude FROM information_vol");
-$reqVitesse = $bdd->query("SELECT id,Vitesse FROM information_vol");
+  //Création du cookie qui stockera le numéro de vol pour la map
+  $cookie_name = "id_Vol";
+  $cookie_value = $_GET['id'];
+  setcookie($cookie_name,$cookie_value,time() + (86400 * 30), "/");
 
-$nbrSec = 0;
-//loop through the returned data
-while ($row = $reqAltitude->fetch()) {
+  //query to get data from the table
+  $reqAltitude = $bdd->query("SELECT id,Altitude FROM information_vol WHERE id_Vol = ".$_COOKIE['id_Vol']."");
+  $reqVitesse = $bdd->query("SELECT id,Vitesse FROM information_vol WHERE id_Vol = ".$_COOKIE['id_Vol']."");
 
-  $Altitude = $Altitude . '"'. $row['Altitude'].'",';
-  $UnitSec = $UnitSec . '"'. $nbrSec.' sec",';
-  $nbrSec++;
+
+  $nbrSec = 0;
+  //loop through the returned data
+  while ($row = $reqAltitude->fetch()) {
+
+    $Altitude = $Altitude . '"'. $row['Altitude'].'",';
+    $UnitSec = $UnitSec . '"'. $nbrSec.' sec",';
+    $nbrSec++;
+  }
+
+  while ($row = $reqVitesse->fetch()) {
+    $Vitesse = $Vitesse .'"'. $row['Vitesse'] .'",';
+  }
+
+  $Altitude = trim($Altitude,",");
+  $Vitesse = trim($Vitesse,",");
+  $UnitSec = trim($UnitSec,",");
+
+  $reqAltitude->closeCursor();
+  $reqVitesse->closeCursor();
 }
-
-while ($row = $reqVitesse->fetch()) {
-  $Vitesse = $Vitesse .'"'. $row['Vitesse'] .'",';
+else {
+  echo "ERREUR : Aucunes données pour afficher des informations de vol !";
 }
-
-$Altitude = trim($Altitude,",");
-$Vitesse = trim($Vitesse,",");
-$UnitSec = trim($UnitSec,",");
-
-$reqAltitude->closeCursor();
-$reqVitesse->closeCursor();
 ?>
 
 <!doctype html>

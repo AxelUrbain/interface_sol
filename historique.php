@@ -35,19 +35,20 @@ if(!isset($_SESSION['login'])){
              $nom = $pseudo->fetch();
              $id_login = $nom['id'];
              $pseudo->closeCursor();
-             print_r($login);
-             print_r($id_login);
 
-             $req = $bdd->prepare("SELECT SQL_CALC_FOUND_ROWS vols.id, membre.nom, machine.immatriculation, vols.date_vols, vols.description
-               FROM vols WHERE id_membre = $id_login
+             $req = $bdd->prepare("SELECT vols.id, membre.nom, machine.immatriculation, vols.date_vols, vols.description
+               FROM vols
                INNER JOIN membre ON vols.id_membre = membre.id
                INNER JOIN machine ON vols.id_machine = machine.id
-               LIMIT :limite OFFSET :debut");
+               WHERE id_membre = :id_login
+               ");
 
                $req->bindValue('limite', $limite, PDO::PARAM_INT);
                $req->bindValue('debut', $debut, PDO::PARAM_INT);
 
-               $req->execute();
+               $req->execute(array(
+                 'id_login'=>$id_login
+               ));
              ?>
 
          <table class="table table-sm">
@@ -71,7 +72,7 @@ if(!isset($_SESSION['login'])){
                <td><?php echo $row['immatriculation']; ?></td>
                <td><?php echo $row['date_vols']; ?></td>
                <td><?php echo $row['description']; ?></td>
-               <?php echo '<td>'.'<a class="btn btn-primary" name="stat_vol"  href="display_vol.php?id='.$row['id'].'">'."Statistiques".'</a>'.'</td>'; ?>
+               <?php echo '<td>'.'<form action="statistique.php?id='.$row['id'].'" method="post"> <button class="btn btn-primary" type="submit" name="statistique">'."Statistiques".'</button></form>'.'</td>'; ?>
                <?php echo '<td>'.'<form action="../function/delete_vol.php?id='.$row['id'].'" method="post"> <button class="btn btn-danger" type="submit" name="delete_vol">'."Supprimer".'</button></form>'.'</td>'; ?>
            </tr>
          </tbody>

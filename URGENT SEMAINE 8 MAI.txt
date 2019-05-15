@@ -1,11 +1,10 @@
 /// URGENT AVANT LA FIN DU PROJET ///
 
-4- Statistiques par vols et appartenant � un membre
-
-
-
+4-
+---> Suppression - membre
 
 5- Suivi des �l�ves par un prof
+
 6- S�curisation
 7- Optimisation du code
 8- Commentaires / Rapport de projet

@@ -156,9 +156,6 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
                 <input class="btn btn-success btn-lg btn-block" type="submit" name="submit" value="Envoyer le vol">
               </div>
           </form>
-          <div id="progress-wrp" class="progress" style="height:20px;">
-            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
         </div>
         <div class="col-lg-4 col-md-4"></div>
       </div>

@@ -13,9 +13,6 @@
           <a class="item-menu" href="historique.php">Historique</a>
         </li>
         <li class="nav-item">
-          <a class="item-menu" href="statistique.php">Statistiques</a>
-        </li>
-        <li class="nav-item">
           <a class="item-menu" href="function/script_disconnect.php">Deconnexion</a>
         </li>
       </ul>

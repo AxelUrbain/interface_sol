@@ -1,10 +1,11 @@
 /// URGENT AVANT LA FIN DU PROJET ///
 
-4-
----> Suppression - membre
+LUNDI - Suivi des �l�ves par un prof
+LUNDI - FONCTION EXPORTATION ---> Implémentation
+LUNDI - MAJ BDD + Fonction importation et exportation
 
-5- Suivi des �l�ves par un prof
 
-6- S�curisation
-7- Optimisation du code
-8- Commentaires / Rapport de projet
+MARDI - S�curisation
+MARDI - Optimisation du code
+
+TOUT LE TEMPS / CE WEEK-END / SEMAINE PRO - Commentaires / Rapport de projet

@@ -2,7 +2,7 @@
 require('function/function.php');
 require_once ('function/db-config.php');
 
-Traitement_Connexion($bdd);
+$result = Traitement_Connexion($bdd);
 ?>
 
 <!doctype html>
@@ -17,6 +17,13 @@ Traitement_Connexion($bdd);
 
       <div class="formulaire col-lg-4 col-md-4">
         <h2 class="form-title">Connexion</h2>
+        <!-- MESSAGE ERREUR OU DE SUCCES -->
+        <div class="form-group">
+        <div class="col-sm-12 col-sm-offset-2">
+          <center>  <?php echo $result; ?> </center>
+        </div>
+        </div>
+
         <form action="connect.php" method="post">
           <div class="form-group">
             <label for="user" class="label-title">Utilisateur</label>

@@ -3,8 +3,6 @@ require_once '../function/function.php';
 require_once '../function/db-config.php';
 function updateInfoMachine($bdd)
 {
-  $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-
   $type = $_POST['type'];
   $modele = $_POST['modele'];
   $marque = $_POST['marque'];

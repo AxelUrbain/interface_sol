@@ -58,6 +58,11 @@ else {
 
     <?php include('include/membre/navbar.php'); ?>
 
+    <div class="title">
+      <center>
+        <h4 class="">Données du vol : <?php echo $_COOKIE['id_Vol']; ?></h4>
+      </center>
+    </div>
 
     <div class="container-fluid">
       <div class="row">

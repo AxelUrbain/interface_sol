@@ -6,7 +6,9 @@ function Disconnect(){
   $_SESSION = array();
   session_unset();
   session_destroy();
+  $message = '<div class="alert alert-success">Vous êtes déconnecté.</div>';
   header('Location : index.php');
+  return $message;
 }
 
 function Traitement_Connexion($bdd){
@@ -40,7 +42,7 @@ function Traitement_Connexion($bdd){
         $resultat = $req->fetch();
         if(!$resultat)
         {
-          $error = "Mauvais pseudo ou mot de passe.";
+          $error = '<div class="alert alert-danger">Mauvais pseudo ou mot de passe.</div>';
           return $error;
         }
         else{
@@ -50,7 +52,7 @@ function Traitement_Connexion($bdd){
             //Redirection vers l'interface admin ou gestionnaire
             $groupe = $resultat['id_role'];
             if(!$resultat){
-              $error = " Ou vous n'avez pas de groupe !";
+              $error = '<div class="alert alert-danger">Pas de groupe affecté.</div>';
               return $error;
             }
             else{
@@ -101,16 +103,16 @@ function InscriptionMembre($bdd){
     if((empty($_POST['nom'])) OR (empty($_POST['prenom'])) OR (empty($_POST['motdepasse'])) OR (empty($_POST['role'])) ){
       //Si au moins un champ est vide déterminer qu'elles sont les champs vide
       if(empty($_POST['nom'])){
-        $error = "Le nom n'est pas référencé !";
+        $error = '<div class="alert alert-danger">Le champs nom est vide.</div>';
       }
       if(empty($_POST['prenom'])){
-        $error = "Le prénom n'est pas référencé !";
+        $error = '<div class="alert alert-danger">Le champs prénom est vide.</div>';
       }
       if(empty($_POST['motdepasse'])){
-        $error = "Le mot de passe n'est pas référencé ou valide !";
+        $error = '<div class="alert alert-danger">Le champs mot de passe est vide.</div>';
       }
       if(empty($_POST['role'])){
-        $error = "Le role n'est pas référencé !";
+        $error = '<div class="alert alert-danger">Aucun rôle référencé !</div>';
       }
       //Retouner tout les messages d'erreurs du tableau error
       return $error;
@@ -135,8 +137,8 @@ function InscriptionMembre($bdd){
         'id_role'=> $role
       ));
       //Message qui valide l'inscription
-      $success = "Vous avez inscits un membre !";
-      echo $success;
+      $success = '<div class="alert alert-success">Vous avez inscrit un membre !</div>';
+      return $success;
     }
 }
 }
@@ -149,19 +151,19 @@ function InscriptionMachine($bdd){
    if(isset($_POST['Btn_Machine'])){
      //Vérification des champs
      if(empty($_POST['type'])){
-       $error[] = "Le type n'est pas référencé !";
+       $error[] = '<div class="alert alert-danger">Aucun type référencé !</div>';
      }
      if(empty($_POST['marque'])){
-       $error[] = "La marque n'est pas référencé !";
+       $error[] = '<div class="alert alert-danger">Aucune marque référencé !</div>';
      }
      if(empty($_POST['modele'])){
-       $error[] = "Le modele n'est pas référencé ou valide !";
+       $error[] = '<div class="alert alert-danger">Aucun modèle référencé !</div>';
      }
      if(empty($_POST['years'])){
-       $error[] = "L'année n'est pas référencé !";
+       $error[] = '<div class="alert alert-danger">Aucune année référencé !</div>';
      }
      if(empty($_POST['finesse'])){
-       $error[] = "La finesse n'est pas référencé !";
+       $error[] = '<div class="alert alert-danger">Aucune finesse référencé !</div>';
      }
      else
      {
@@ -183,7 +185,8 @@ function InscriptionMachine($bdd){
          'finesse'=> $finesse
        ));
        //Message qui valide l'inscription
-       $success = "Vous avez mis un nouvel appareil !";
+       $success = '<div class="alert alert-success">Vous avez inscrit un appareil !</div>';
+       return $success;
      }
  }
 }

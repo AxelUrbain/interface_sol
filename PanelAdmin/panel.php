@@ -12,8 +12,8 @@ if($_SESSION['id_role'] != 4){
 }
 else
 {
-  InscriptionMembre($bdd);
-  InscriptionMachine($bdd);
+  $MessageMembre = InscriptionMembre($bdd);
+  $MessageMachine = InscriptionMachine($bdd);
 }
 ?>
 
@@ -30,7 +30,20 @@ else
      </div>
 
      <div class="container">
-       <div class="row space">
+       <!-- MESSAGE D'ERREUR OU DE SUCCES ! -->
+       <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+          <center>  <?php echo $MessageMembre; ?> </center>
+        </div>
+       </div>
+
+       <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+          <center>  <?php echo $MessageMachine; ?> </center>
+        </div>
+       </div>
+
+       <div class="row space2">
          <div class="col-md-6 col-lg-6">
            <center>
             <!-- VISUEL - Inscription -->
@@ -175,7 +188,7 @@ else
             </div>
          </div>
        </div>
-       <div class="row space">
+       <div class="row space2">
          <div class="col-md-6 col-md-6">
            <center>
              <h3 class="">Membres</h3>
@@ -185,7 +198,7 @@ else
          <div class="col-md-6 col-lg-6">
            <center>
              <h3 class="">Historique</h3>
-             <a href="hist_adm.php"><i class="fa fa-plane fa-10x"></i></a>
+             <a href="hist_adm.php"><i class="fa fa-folder-open fa-10x"></i></a>
            </center>
          </div>
        </div>

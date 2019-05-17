@@ -7,6 +7,7 @@ body{
   padding: 0;
   min-height: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 #menu{
@@ -14,7 +15,7 @@ body{
 }
 
 .color-menu{
-  font-size: 42px;
+  font-size: 32px;
   color: white;
   text-transform: uppercase;
   font-weight: normal;
@@ -29,7 +30,7 @@ body{
 .item-menu{
   text-transform: uppercase;
   font-weight: normal;
-  font-size: 22px;
+  font-size: 18px;
   color: white;
   margin-right: 25px;
 }
@@ -49,10 +50,10 @@ body{
 
 #img-connect{
   width: 100%;
-  height: 450px;
+  height: 360px;
   /*background:rgba(197,208,209, 0.5);*/
   background-image: url('../img/img.jpg');
-  padding-top: 275px;
+  padding-top: 175px;
 }
 
 .bouton-connect{
@@ -75,7 +76,7 @@ body{
   color: white;
 }
 
-.space{
+.space2{
   height: 100%;
   width: 100%;
   margin-bottom:40px;
@@ -83,22 +84,22 @@ body{
 
 .title{
   text-transform: uppercase;
-  font-size: 38px;
+  font-size: 28px;
   margin-top:25px;
   margin-bottom: 25px;
 }
 
 #footer-color{
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 100px;
+  height: 50px;
   background-color: #1CA3B8;
 }
 
 .footer-text{
-  padding-top: 40px;
+  padding-top: 15px;
   text-align: center;
   font-weight: normal;
   font-family: 'Rubik', sans-serif;
@@ -136,7 +137,6 @@ body{
 }
 
 .form-space{
-  margin-bottom: 275px;
   width: 100%;
   height: 100%;
 }
@@ -165,14 +165,18 @@ body{
   color: #127B84;
 }
 
-.fa.fa-plane{
-  color: #1CA3B8;
+.fa.fa-folder-open{
+    color:#1CA3B8;
 }
 
-.fa.fa-plane:hover{
-  color: #127B84;
+.fa.fa-folder-open:hover{
+    color:#127B84;
 }
 
+/*ESPACE ENTRE LA PAGINATION ET LE FOOTER*/
+.space{
+  height: 35px;
+}
 /* TABLEAU MEMBRE*/
 table{
   text-align: center;
@@ -185,14 +189,4 @@ table{
 #mapid {
   height: 90%;
   width: 100%;
-}
-
-/* Chnagement du format de l'écran */
-@media screen and (max-width: 990px) {
-    #footer-color {
-        position: relative;
-        top: auto;
-        left: auto;
-        height: 120px;
-    }
 }

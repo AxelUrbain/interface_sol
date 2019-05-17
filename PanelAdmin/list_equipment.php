@@ -143,6 +143,7 @@ if($_SESSION['id_role'] != 4){
         }
         ?>
         </div>
+        <div class="space"></div>
     </div>
 
     <?php include('../include/footer.php'); ?>

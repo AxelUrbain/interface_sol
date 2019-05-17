@@ -3,8 +3,6 @@ require_once '../function/function.php';
 require_once '../function/db-config.php';
 function updateInfoMember($bdd)
 {
-  $bdd = new PDO('mysql:host=localhost;dbname=interface_sol;charset=utf8', 'root', '');
-
   $nom = $_POST['nom'];
   $prenom = $_POST['prenom'];
   $password = $_POST['password'];

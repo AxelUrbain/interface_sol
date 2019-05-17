@@ -13,9 +13,6 @@
           <a class="item-menu disabled" href="#" aria-disabled="true">Historique</a>
         </li>
         <li class="nav-item">
-          <a class="item-menu disabled" href="#" aria-disabled="true">Statistiques</a>
-        </li>
-        <li class="nav-item">
           <a class="item-menu" href="connect.php">Connexion</a>
         </li>
       </ul>

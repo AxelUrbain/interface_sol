@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if(!isset($_SESSION['login'])){
   header('Location: index.php');
   exit();
@@ -8,21 +9,17 @@ if(!isset($_SESSION['login'])){
 require_once 'function/db-config.php';
 require_once 'function/function.php';
 
-if(isset($_POST['statistique']))
+$_SESSION['id_Vol']=$_GET['id'];
+
+if(isset($_POST['BTNstatistique']))
 {
   $Altitude = '';
   $Vitesse = '';
   $UnitSec = '';
 
-  //Création du cookie qui stockera le numéro de vol pour la map
-  $cookie_name = "id_Vol";
-  $cookie_value = $_GET['id'];
-  setcookie($cookie_name,$cookie_value,time() + (86400 * 30), "/");
-
   //query to get data from the table
-  $reqAltitude = $bdd->query("SELECT id,Altitude FROM information_vol WHERE id_Vol = ".$_COOKIE['id_Vol']."");
-  $reqVitesse = $bdd->query("SELECT id,Vitesse FROM information_vol WHERE id_Vol = ".$_COOKIE['id_Vol']."");
-
+  $reqAltitude = $bdd->query("SELECT id,Altitude FROM information_vol WHERE id_Vol = ".$_GET['id']."");
+  $reqVitesse = $bdd->query("SELECT id,Vitesse FROM information_vol WHERE id_Vol = ".$_GET['id']."");
 
   $nbrSec = 0;
   //loop through the returned data
@@ -53,64 +50,59 @@ else {
 <html lang="fr">
   <?php include('include/membre/header.php'); ?>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js" > </script>
 
   <body>
 
     <?php include('include/membre/navbar.php'); ?>
 
-    <div class="title">
-      <center>
-        <h4 class="">Données du vol : <?php echo $_COOKIE['id_Vol']; ?></h4>
-      </center>
-    </div>
-
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4 col-lg-4">
-          <h3>Altitude</h3>
-          <canvas id="Altitude" style="width:100%;"></canvas>
-          <h3>Vitesse</h3>
-          <canvas id="Vitesse" style="width:100%;"></canvas>
-          <script>
-            var ctx = document.getElementById("Altitude").getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [<?php echo $UnitSec; ?>],
-                    datasets:
-                    [{
-                        label: 'Altitude',
-                        data: [<?php echo $Altitude; ?>],
-                        backgroundColor: 'transparent',
-                        borderColor:'rgba(255,99,132)',
-                        borderWidth: 2
-                    }]
-                }
-            });
+        <div class="row">
+          <div class="col-md-4 col-lg-4">
+            <h3>Altitude</h3>
+            <canvas id="Altitude" style="width:100%; height:300px;"></canvas>
+            <h3>Vitesse</h3>
+            <canvas id="Vitesse" style="width:100%; height:300px;"></canvas>
+            <script>
+              var ctx = document.getElementById("Altitude").getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                      labels: [<?php echo $UnitSec; ?>],
+                      datasets:
+                      [{
+                          label: 'Altitude',
+                          data: [<?php echo $Altitude; ?>],
+                          backgroundColor: 'transparent',
+                          borderColor:'rgba(255,99,132)',
+                          borderWidth: 2
+                      }]
+                  }
+              });
 
-            var ctx = document.getElementById("Vitesse").getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [<?php echo $UnitSec; ?>],
-                    datasets:
-                    [{
-                        label: 'Vitesse',
-                        data: [<?php echo $Vitesse; ?>],
-                        backgroundColor: 'transparent',
-                        borderColor:'rgba(50,192,204)',
-                        borderWidth: 2
-                    }]
-                }
-            });
+              var ctx = document.getElementById("Vitesse").getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                      labels: [<?php echo $UnitSec; ?>],
+                      datasets:
+                      [{
+                          label: 'Vitesse',
+                          data: [<?php echo $Vitesse; ?>],
+                          backgroundColor: 'transparent',
+                          borderColor:'rgba(50,192,204)',
+                          borderWidth: 2
+                      }]
+                  }
+              });
 
-          </script>
+            </script>
+          </div>
+          <div class=" col-xs-12 col-md-8 col-lg-8">
+            <center><h3>Tracet GPS</h3></center>
+            <div id="mapid"></div>
+          </div>
         </div>
-        <div class=" col-xs-12 col-md-8 col-lg-8">
-          <h2>TEST CARTE</h2>
-          <div id="mapid"></div>
-        </div>
-      </div>
     </div>
 
     <?php include('include/footer.php'); ?>

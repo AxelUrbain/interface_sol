@@ -107,7 +107,7 @@ if($_SESSION['id_role'] != 4){
               <td><?php echo $row['modele']; ?></td>
               <td><?php echo $row['annee']; ?></td>
               <td><?php echo $row['finesse']; ?></td>
-              <?php echo '<td>'.'<a class="btn btn-primary" id="link_update_member" href="edit_equipment.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
+              <?php echo '<td>'.'<a class="btn btn-info" id="link_update_member" href="edit_equipment.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
               <?php echo '<td>'.'<a class="btn btn-danger" name="button_delete_machine" href="delete_equipment.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
           </tr>
         </tbody>

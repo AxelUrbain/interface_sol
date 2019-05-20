@@ -76,7 +76,7 @@ function Traitement_Connexion($bdd){
                 session_start();
                 $_SESSION['login'] = $nom;
                 $_SESSION['id_role'] = $groupe;
-                header('Location: add_fly.php');
+                header('Location: instructeur/list_eleve.php');
                 exit();
               }
 

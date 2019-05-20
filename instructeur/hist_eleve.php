@@ -1,21 +1,25 @@
 <?php
 session_start();
-require('function/function.php');
-require_once 'function/db-config.php';
+require('../function/function.php');
+require_once '../function/db-config.php';
 if(!isset($_SESSION['login'])){
-  header('Location: index.php');
+  header('Location: ../index.php');
+  exit();
+}
+if($_SESSION['id_role'] != 2){
+  header('Location: ../index.php');
   exit();
 }
  ?>
 
 <!doctype html>
  <html lang="fr">
-   <?php include('include/membre/header.php'); ?>
+   <?php include('../include/instructeur/header.php'); ?>
    <body>
-     <?php include('include/membre/navbar.php'); ?>
+     <?php include('../include/instructeur/navbar.php'); ?>
      <div class="title">
        <center>
-         <h4 class="">Historique des vols</h4>
+         <h4>Historique</h4>
        </center>
      </div>
 
@@ -26,9 +30,9 @@ if(!isset($_SESSION['login'])){
              $limite = 10;
              /* CALCUL LE NUMERO DU PREMIER ELEMENT A RECUPERER */
              $debut = ($page-1) * $limite;
-             //Déterminer l'utilisateur connecté
-             $login = $_SESSION['login'];
-             $pseudo = $bdd->prepare("SELECT id,nom,prenom FROM membre WHERE nom = :login");
+             //Déterminer l'utilisateur selectionné
+             $login = $_GET['id'];
+             $pseudo = $bdd->prepare("SELECT id,nom,prenom FROM membre WHERE id = :login");
              $pseudo->execute(array(
               'login'=>$login
              ));
@@ -55,13 +59,12 @@ if(!isset($_SESSION['login'])){
            <caption>Liste des membres</caption>
            <thead>
            <tr class="bg-dark">
-             <th class="text-uppercase th-membre" scope="col"><p>id</p></th>
-             <th class="text-uppercase th-membre" scope="col"><p>membre</p></th>
-             <th class="text-uppercase th-membre" scope="col"><p>machine</p></th>
+             <th class="text-uppercase th-membre" scope="col"><p>Id</p></th>
+             <th class="text-uppercase th-membre" scope="col"><p>Membre</p></th>
+             <th class="text-uppercase th-membre" scope="col"><p>Machine</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>Date</p></th>
-             <th class="text-uppercase th-membre" scope="col"><p>description</p></th>
+             <th class="text-uppercase th-membre" scope="col"><p>Description</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>Statistiques</p></th>
-             <th class="text-uppercase th-membre" scope="col"><p>Supprimer</p></th>
            </tr>
            </thead>
            <tbody>
@@ -72,8 +75,7 @@ if(!isset($_SESSION['login'])){
                <td><?php echo $row['immatriculation']; ?></td>
                <td><?php echo $row['date_vols']; ?></td>
                <td><?php echo $row['description']; ?></td>
-               <?php echo '<td>'.'<form action="statistique.php?id='.$row['id'].'" method="post"> <button class="btn btn-primary" type="submit" name="BTNstatistique">'."Statistiques".'</button></form>'.'</td>'; ?>
-               <?php echo '<td>'.'<form action="function/delete_vol.php?id='.$row['id'].'" method="post"> <button class="btn btn-danger" type="submit" name="delete_vol">'."Supprimer".'</button></form>'.'</td>'; ?>
+               <?php echo '<td>'.'<form action="../statistique.php?id='.$row['id'].'" method="post"> <button class="btn btn-info" type="submit" name="BTNstatistique">'."Statistiques".'</button></form>'.'</td>'; ?>
            </tr>
          </tbody>
          <?php }
@@ -111,7 +113,7 @@ if(!isset($_SESSION['login'])){
          <div class="space"></div>
      </div>
 
-     <?php include('include/footer.php'); ?>
+     <?php include('../include/footer.php'); ?>
      <!-- Optional JavaScript -->
      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

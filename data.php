@@ -8,9 +8,8 @@ require_once 'function/db-config.php';
 require_once 'function/function.php';
 
   //Récupération de la Latitude et de la Longitude
-  //$id_Vol = $_COOKIE['id_Vol'];
   $dataLongLat = array();
-  $reqLatLon = $bdd->query("SELECT id,Longitude,Latitude,DirLongitude,DirLatitude FROM information_vol WHERE id_Vol =".$_COOKIE['id_Vol']."");
+  $reqLatLon = $bdd->query("SELECT id,Longitude,Latitude,DirLongitude,DirLatitude FROM information_vol WHERE id_Vol =".$_SESSION['id_Vol']."");
 
   //Récupérer toutes les longitudes faire un tableau puis les convertirs
   //Récupérer toutes les latitudes faire un tableau puis les convertirs

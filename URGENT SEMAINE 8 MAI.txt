@@ -1,9 +1,8 @@
 /// URGENT AVANT LA FIN DU PROJET ///
 
-LUNDI - Suivi des �l�ves par un prof
-LUNDI - FONCTION EXPORTATION ---> Implémentation
-LUNDI - MAJ BDD + Fonction importation et exportation
+LUNDI - MAJ BDD  + IMPORTATION MODIFIER
 
+MARDI - SI SUPPRIME UN MEMBRE SUPPRIMER LES VOLS
 
 MARDI - S�curisation
 MARDI - Optimisation du code

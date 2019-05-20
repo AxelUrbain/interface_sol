@@ -117,7 +117,7 @@ if($_SESSION['id_role'] != 4){
               <th scope="row" class="bg-warning"><?php echo $row['prenom']; ?></th>
               <td><?php echo $row['Date_inscription']; ?></td>
               <td><?php echo $row['role']; ?></td>
-              <?php echo '<td>'.'<a class="btn btn-primary"  href="edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
+              <?php echo '<td>'.'<a class="btn btn-info"  href="edit.php?id='.$row['id'].'">'."Modifier".'</a>'.'</th>'; ?>
               <?php echo '<td>'.'<a class="btn btn-danger" name="button_delete_user" href="delete.php?id='.$row['id'].'">'."Supprimer".'</a>'.'</th>'; ?>
           </tr>
         </tbody>

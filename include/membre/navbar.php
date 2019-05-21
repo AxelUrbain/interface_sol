@@ -1,6 +1,6 @@
 <div id="menu">
   <nav class="navbar navbar-expand-lg">
-    <a class="color-menu" href="index.php">Suivi de vol -  <?php echo $_SESSION['login']; ?> </a>
+    <a class="color-menu" href="#">Suivi de vol -  <?php echo $_SESSION['login']; ?> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="fa fa-bars fa-2x"></span>
     </button>
@@ -11,6 +11,12 @@
         </li>
         <li class="nav-item">
           <a class="item-menu" href="historique.php">Historique</a>
+        </li>
+        <li class="nav-item">
+          <a class="item-menu" href="briefing.php">Briefing</a>
+        </li>
+        <li class="nav-item">
+          <a class="item-menu" href="direct.php">Live</a>
         </li>
         <li class="nav-item">
           <a class="item-menu" href="function/script_disconnect.php">Deconnexion</a>

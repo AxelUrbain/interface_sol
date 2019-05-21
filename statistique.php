@@ -18,20 +18,20 @@ if(isset($_POST['BTNstatistique']))
   $UnitSec = '';
 
   //query to get data from the table
-  $reqAltitude = $bdd->query("SELECT id,Altitude FROM information_vol WHERE id_Vol = ".$_GET['id']."");
-  $reqVitesse = $bdd->query("SELECT id,Vitesse FROM information_vol WHERE id_Vol = ".$_GET['id']."");
+  $reqAltitude = $bdd->query("SELECT id,Altitude_mer FROM information_vol WHERE id_Vol = ".$_GET['id']."");
+  $reqVitesse = $bdd->query("SELECT id,Vitesse_sol FROM information_vol WHERE id_Vol = ".$_GET['id']."");
 
   $nbrSec = 0;
   //loop through the returned data
   while ($row = $reqAltitude->fetch()) {
 
-    $Altitude = $Altitude . '"'. $row['Altitude'].'",';
+    $Altitude = $Altitude . '"'. $row['Altitude_mer'].'",';
     $UnitSec = $UnitSec . '"'. $nbrSec.' sec",';
     $nbrSec++;
   }
 
   while ($row = $reqVitesse->fetch()) {
-    $Vitesse = $Vitesse .'"'. $row['Vitesse'] .'",';
+    $Vitesse = $Vitesse .'"'. $row['Vitesse_sol'] .'",';
   }
 
   $Altitude = trim($Altitude,",");
@@ -99,7 +99,7 @@ else {
             </script>
           </div>
           <div class=" col-xs-12 col-md-8 col-lg-8">
-            <center><h3>Tracet GPS</h3></center>
+            <center><h3>Tracer GPS</h3></center>
             <div id="mapid"></div>
           </div>
         </div>

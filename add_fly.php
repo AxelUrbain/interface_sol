@@ -19,7 +19,7 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     // Vérifie l'extension du fichier
     $elementChemin = pathinfo($nomOrigine);
     $extensionFichier = $elementChemin['extension'];
-    $extensionAutorise = array("fc","txt");
+    $extensionAutorise = array("fc");
 
     if(!(in_array($extensionFichier, $extensionAutorise))) {
       $erreur = "Erreur : Veuillez sélectionner un format de fichier valide.";
@@ -75,32 +75,28 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
     $IdVol = $requeteIdVol->fetch();
     $requeteIdVol->closeCursor();
     //Requete d'insertion des informations du fichier
-    $requeteImport = $bdd->prepare("INSERT INTO information_vol (UTC, Latitude, Longitude, DirLatitude, DirLongitude, Altitude, Cap, Vitesse, TypeAlarme, NiveauAlarme,
-    EtatFLARM, PositionAutre, LongitudeAutre, LatitudeAutre, CapAutre, DirLatAutre, DirLongAutre, id_Vol) VALUES(:UTC, :Latitude, :Longitude, :DirLatitude, :DirLongitude, :Altitude, :Cap, :Vitesse,
-    :TypeAlarme, :NiveauAlarme, :EtatFLARM, :PositionAutre, :LongitudeAutre, :LatitudeAutre, :CapAutre, :DirLatAutre, :DirLongAutre, :id_Vol)");
+    $requeteImport = $bdd->prepare("INSERT INTO information_vol (utc, Latitude, Longitude, Altitude_mer, Cap, Vitesse_sol, latitude_important, longitude_important,
+    cap_important, separation_verticale, latitude_aerodrome, longitude_aerodrome, altitude_aerodrome, id_Vol) VALUES(:utc, :Latitude, :Longitude, :Altitude_mer, :Cap, :Vitesse_sol, :latitude_important, :longitude_important,
+    :cap_important, :separation_verticale, :latitude_aerodrome, :longitude_aerodrome, :altitude_aerodrome, :id_Vol)");
 
     // Ouvre le fichier en lecture
     $row = 1;
     if(($fp = fopen($nomDestination,"r")) !== FALSE){
       while(($data = fgetcsv($fp, 1000, "/")) !== FALSE){
         $requeteImport->execute(array(
-          'UTC'=> $data[1],
+          'utc'=> $data[1],
           'Latitude'=> $data[2],
           'Longitude'=> $data[3],
-          'DirLatitude'=> $data[4],
-          'DirLongitude'=> $data[5],
-          'Altitude'=> $data[6],
-          'Cap'=> $data[7],
-          'Vitesse'=> $data[8],
-          'TypeAlarme'=> $data[9],
-          'NiveauAlarme'=> $data[10],
-          'EtatFLARM'=> $data[11],
-          'PositionAutre'=> $data[12],
-          'LongitudeAutre'=> $data[13],
-          'LatitudeAutre'=> $data[14],
-          'CapAutre'=> $data[15],
-          'DirLatAutre'=> $data[16],
-          'DirLongAutre'=> $data[17],
+          'Altitude_mer'=> $data[4],
+          'Cap'=> $data[5],
+          'Vitesse_sol'=> $data[6],
+          'latitude_important'=> $data[7],
+          'longitude_important'=> $data[8],
+          'cap_important'=> $data[9],
+          'separation_verticale'=> $data[10],
+          'latitude_aerodrome'=> $data[11],
+          'longitude_aerodrome'=> $data[12],
+          'altitude_aerodrome'=> $data[13],
           'id_Vol'=> $IdVol[0]
         ));
       }
@@ -121,8 +117,6 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
 <!doctype html>
 <html lang="fr">
 <?php include('include/membre/header.php'); ?>
-<script src="Script/bootstrap-progressbar.min.js" type="text/javascript"></script>
-<script src="progress-bar.js" type="text/javascript"></script>
   <body>
     <?php include('include/membre/navbar.php');?>
     <div class="container">

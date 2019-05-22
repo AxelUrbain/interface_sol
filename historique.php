@@ -57,7 +57,7 @@ if(!isset($_SESSION['login'])){
            <tr class="bg-dark">
              <th class="text-uppercase th-membre" scope="col"><p>id</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>membre</p></th>
-             <th class="text-uppercase th-membre" scope="col"><p>machine</p></th>
+             <th class="text-uppercase th-membre" scope="col"><p>immatriculation</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>Date</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>description</p></th>
              <th class="text-uppercase th-membre" scope="col"><p>Statistiques</p></th>
@@ -72,7 +72,7 @@ if(!isset($_SESSION['login'])){
                <td><?php echo $row['immatriculation']; ?></td>
                <td><?php echo $row['date_vols']; ?></td>
                <td><?php echo $row['description']; ?></td>
-               <?php echo '<td>'.'<form action="statistique.php?id='.$row['id'].'" method="post"> <button class="btn btn-primary" type="submit" name="BTNstatistique">'."Statistiques".'</button></form>'.'</td>'; ?>
+               <?php echo '<td>'.'<form action="statistique.php?id='.$row['id'].'" method="post"> <button class="btn btn-info" type="submit" name="BTNstatistique">'."Statistiques".'</button></form>'.'</td>'; ?>
                <?php echo '<td>'.'<form action="function/delete_vol.php?id='.$row['id'].'" method="post"> <button class="btn btn-danger" type="submit" name="delete_vol">'."Supprimer".'</button></form>'.'</td>'; ?>
            </tr>
          </tbody>

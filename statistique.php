@@ -60,9 +60,9 @@ else {
         <div class="row">
           <div class="col-md-4 col-lg-4">
             <h3>Altitude</h3>
-            <canvas id="Altitude" style="width:100%; height:300px;"></canvas>
+            <canvas id="Altitude" style="width:100%; height:275px;"></canvas>
             <h3>Vitesse</h3>
-            <canvas id="Vitesse" style="width:100%; height:300px;"></canvas>
+            <canvas id="Vitesse" style="width:100%; height:275px;"></canvas>
             <script>
               var ctx = document.getElementById("Altitude").getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -95,17 +95,14 @@ else {
                       }]
                   }
               });
-
             </script>
           </div>
-          <div class=" col-xs-12 col-md-8 col-lg-8">
+          <div class="col-md-8 col-lg-8">
             <center><h3>Tracer GPS</h3></center>
             <div id="mapid"></div>
           </div>
         </div>
     </div>
-
-    <?php include('include/footer.php'); ?>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -116,5 +113,7 @@ else {
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
     <script src="map.js"></script>
+
+    <?php include('include/footer.php'); ?>
   </body>
 </html>

@@ -165,6 +165,9 @@ function InscriptionMachine($bdd){
      if(empty($_POST['finesse'])){
        $error[] = '<div class="alert alert-danger">Aucune finesse référencé !</div>';
      }
+     if(empty($_POST['immatriculation'])){
+       $error[] = '<div class="alert alert-danger">Aucune imatriculation référencé !</div>';
+     }
      else
      {
        //Récupération des informations du formulaire
@@ -173,16 +176,18 @@ function InscriptionMachine($bdd){
        $modele = $_POST['modele'];
        $years = $_POST['years'];
        $finesse = $_POST['finesse'];
+       $immatriculation = $_POST['immatriculation'];
        //Préparation de la requete d'Inscription
-       $requete = $bdd->prepare("INSERT INTO machine(type, marque, modele, annee, finesse)
-       VALUES(:type, :marque, :modele, :annee, :finesse)");
+       $requete = $bdd->prepare("INSERT INTO machine(type, marque, modele, annee, finesse, immatriculation)
+       VALUES(:type, :marque, :modele, :annee, :finesse, :immatriculation)");
        //Exécution de la raquete
        $requete->execute(array(
          'type'=> $type,
          'marque'=> $marque,
          'modele'=> $modele,
          'annee'=> $years,
-         'finesse'=> $finesse
+         'finesse'=> $finesse,
+         'immatriculation'=> $immatriculation
        ));
        //Message qui valide l'inscription
        $success = '<div class="alert alert-success">Vous avez inscrit un appareil !</div>';
@@ -222,7 +227,7 @@ function updateMemberID()
 // Fonction préparation de la requete de modification d'une machine
 function updateMachineID()
 {
-  return 'UPDATE machine SET type = :type, marque = :marque, modele = :modele, annee = :annee, finesse = :finesse WHERE id = :id';
+  return 'UPDATE machine SET type = :type, marque = :marque, modele = :modele, annee = :annee, finesse = :finesse, immatriculation = :immatriculation WHERE id = :id';
 }
 
 function displayInfoMember($bdd){
@@ -233,17 +238,19 @@ function displayInfoMember($bdd){
   );
   $query->execute($array);
   $data=$query->fetch();
+
+
   if($data)
   {
-    echo '<form class="form-group" action="update_equipment.php?id='.$data['id'].'" method="post">';
-    echo '<label>Nom : </label>';
-    echo '<input class="form-control" type="text" name="nom" value="'.$data['nom'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Prénom : </label>';
-    echo '<input class="form-control" type="text" name="prenom" value="'.$data['prenom'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Mot de Passe : </label>';
-    echo '<input class="form-control" type="password" name="password" value="'.$data['password'].'" required/>'.'</br>'.'</br>';
-    echo '<label>id Role : </label>';
-    echo '<input class="form-control" type="number" min="1" max="4" name="role" value="'.$data['id_role'].'" required/>'.'</br>'.'</br>';
+    echo '<form class="form-group col-lg-6 col-md-6" action="update.php?id='.$data['id'].'" method="post">';
+    echo '<label class="edit-label">Nom : </label>';
+    echo '<input class="form-control" type="text" name="nom" value="'.$data['nom'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Prénom : </label>';
+    echo '<input class="form-control" type="text" name="prenom" value="'.$data['prenom'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Mot de Passe : </label>';
+    echo '<input class="form-control" type="password" name="password" value="" required/>'.'</br>';
+    echo '<label class="edit-label">id Role : </label>';
+    echo '<input class="form-control" type="number" min="1" max="4" name="role" value="'.$data['id_role'].'" required/>'.'</br>';
     echo '<input type="submit" name="form_update" value="Modifier" class="btn btn-success" />';
     echo '</form>';
   }
@@ -265,17 +272,19 @@ function displayInfoMachine($bdd)
   $data=$query->fetch();
   if($data)
   {
-    echo '<form class="form-group" action="update_equipment.php?id='.$data['id'].'" method="post">';
-    echo '<label>Type : </label>';
-    echo '<input class="form-control" type="text" name="type" value="'.$data['type'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Marque : </label>';
-    echo '<input class="form-control" type="text" name="marque" value="'.$data['marque'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Modèle : </label>';
-    echo '<input class="form-control" type="text" name="modele" value="'.$data['modele'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Année : </label>';
-    echo '<input class="form-control" type="number" min="1900" max="2050" name="annee" value="'.$data['annee'].'" required/>'.'</br>'.'</br>';
-    echo '<label>Finesse : </label>';
-    echo '<input class="form-control" type="text"  name="finesse" value="'.$data['finesse'].'" required/>'.'</br>'.'</br>';
+    echo '<form class="form-group col-lg-6 col-md-6" action="update_equipment.php?id='.$data['id'].'" method="post">';
+    echo '<label class="edit-label">Type : </label>';
+    echo '<input class="form-control" type="text" name="type" value="'.$data['type'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Marque : </label>';
+    echo '<input class="form-control" type="text" name="marque" value="'.$data['marque'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Modèle : </label>';
+    echo '<input class="form-control" type="text" name="modele" value="'.$data['modele'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Année : </label>';
+    echo '<input class="form-control" type="number" min="1900" max="2050" name="annee" value="'.$data['annee'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Finesse : </label>';
+    echo '<input class="form-control" type="text"  name="finesse" value="'.$data['finesse'].'" required/>'.'</br>';
+    echo '<label class="edit-label">Immatriculation : </label>';
+    echo '<input class="form-control" type="text"  name="finesse" value="'.$data['immatriculation'].'" required/>'.'</br>';
     echo '<input type="submit" name="form_update_equipment" value="Modifier" class="btn btn-success" />';
     echo '</form>';
   }

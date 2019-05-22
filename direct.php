@@ -7,7 +7,7 @@ if(!isset($_SESSION['login'])){
   exit();
 }
  ?>
- 
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -22,7 +22,7 @@ if(!isset($_SESSION['login'])){
 <body>
   <?php include('include/membre/navbar.php'); ?>
   <!-- 21:9 aspect ratio -->
-<div class="embed-responsive embed-responsive-21by9">
+<div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="http://live.glidernet.org/#c=46.81620,0.32830&z=10&s=1"></iframe>
 </div>
 </body>

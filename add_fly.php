@@ -132,7 +132,7 @@ if(isset($_FILES["FileImport"]) && $_FILES["FileImport"]["error"] == 0){
                   $resultat = $bdd->query("SELECT * FROM machine");
                   while ($donnes = $resultat->fetch())
                   {
-                    echo "<option value=".$donnes['immatriculation'].">".$donnes['immatriculation']."</option>";
+                    echo "<option value=".$donnes['immatriculation'].">".$donnes['modele']."</option>";
                   }
                   $resultat->closeCursor();
                    ?>

@@ -49,7 +49,7 @@ if($_SESSION['id_role'] != 4){
           <tr class="bg-dark">
             <th class="text-uppercase th-membre" scope="col"><p>id</p></th>
             <th class="text-uppercase th-membre" scope="col"><p>membre</p></th>
-            <th class="text-uppercase th-membre" scope="col"><p>machine</p></th>
+            <th class="text-uppercase th-membre" scope="col"><p>immatriculation</p></th>
             <th class="text-uppercase th-membre" scope="col"><p>Date</p></th>
             <th class="text-uppercase th-membre" scope="col"><p>description</p></th>
             <th class="text-uppercase th-membre" scope="col"><p>Statistiques</p></th>

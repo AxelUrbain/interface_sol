@@ -30,14 +30,9 @@ if($_SESSION['id_role'] != 4){
               <div class="row">
                 <label class="col-lg-2 col-md-2" for="">Type</label>
                 <select class="col-lg-6 col-md-6 form-control" name="select_type">
-                  <?php
-                  $resultat = $bdd->query("SELECT * FROM machine");
-                  while ($donnes = $resultat->fetch())
-                  {
-                    echo "<option value=".$donnes['type'].">".$donnes['type']."</option>";
-                  }
-                  $resultat->closeCursor();
-                   ?>
+                   <option value="Planeur">Planeur</option>
+                   <option value="Moto-Planeur">Moto-Planeur</option>
+                   <option value="ULM">ULM</option>
                 </select>
                 <button class="col-lg-4 col-md-4 btn btn-success" type="submit" name="button_select_materiel">Trier</button>
               </div>

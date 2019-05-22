@@ -19,7 +19,7 @@ if($_SESSION['id_role'] != 4){
     <?php include('../include/admin/navbar.php'); ?>
     <div class="container">
       <center>
-        <h3>Modification matériel</h3>
+        <h3 class="edit">Modification matériel</h3>
         <?php displayInfoMachine($bdd); ?>
       </center>
     </div>

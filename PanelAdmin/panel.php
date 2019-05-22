@@ -150,7 +150,11 @@ else
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">Type</label>
                   <div class="col-sm-8">
-                    <input name="type" type="text" class="form-control" placeholder="Planeur" required>
+                    <select class="form-control" name="type">
+                      <option value="Planeur">Planeur</option>
+                      <option value="Moto-Planeur">Moto-Planeur</option>
+                      <option value="ULM">ULM</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -175,6 +179,12 @@ else
                   <label class="col-sm-4 col-form-label">Finesse Théorique</label>
                   <div class="col-sm-8">
                     <input name="finesse" type="number" min="0" max="1000" step="1" value="" class="form-control" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Immatriculation</label>
+                  <div class="col-sm-8">
+                    <input name="immatriculation" type="text" class="form-control" required>
                   </div>
                 </div>
                  </div>

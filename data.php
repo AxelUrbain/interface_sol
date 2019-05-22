@@ -14,14 +14,8 @@ require_once 'function/function.php';
   //Récupérer toutes les longitudes faire un tableau puis les convertirs
   //Récupérer toutes les latitudes faire un tableau puis les convertirs
   while ($row = $reqLatLon->fetch()) {
-    //Conversion Longitude
     $Longitude = $row['Longitude'];
-    //$DirLong = $row['DirLongitude'];
-    //$LongitudeDD = DMtoDD(substr($Longitude,0,3),substr($Longitude,3,10),$DirLong);
-    //Conversion Latitude
     $Latitude = $row['Latitude'];
-    //$DirLat = $row['DirLatitude'];
-    //$LatitudeDD = DMtoDD(substr($Latitude,0,2),substr($Latitude,2,9),$DirLat);
     $dataLongLat[] = $Latitude.','.$Longitude;
   }
 

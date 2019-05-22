@@ -8,6 +8,7 @@ function updateInfoMachine($bdd)
   $marque = $_POST['marque'];
   $annee = $_POST['annee'];
   $finesse = $_POST['finesse'];
+  $immatriculation = $_POST['immatriculation'];
   $id = $_GET['id'];
 
   $query = $bdd->prepare(updateMachineID());
@@ -17,6 +18,7 @@ function updateInfoMachine($bdd)
     'modele'=> $modele,
     'annee'=> $annee,
     'finesse'=> $finesse,
+    'immatriculation'=> $immatriculation,
     'id'=> $id
   );
   $query->execute($array);
